@@ -1,0 +1,74 @@
+{% extends '@AdminBundle/Resources/views/base.html.twig' %}
+{% block content %}
+
+    <section class="content-header">
+        <h1>
+            Rotas cadastradas
+        </h1>
+    </section>
+
+    <section class="content">
+        <div class="box-body">
+            <div class="media-body">
+                <div class="clearfix">
+                    <p class="pull-left">
+                        <a href="{{ path('go_admin_way_new') }}" class="btn btn-success btn-sm">
+                            Cadastrar rota
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="box box-primary">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Rotas cadastradas</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table role="grid" class="table table-bordered table-striped dataTable" id="dtable">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                    <th>Ações</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for way in ways %}
+                                    <tr>
+                                        <td>{{ way.id }}</td>
+                                        <td>{{ way.name }}</td>
+                                        <td>
+
+                                            <a href="{{ path('go_admin_way_detail', {'id': way.id}) }}"
+                                                class="btn btn-info btn-flat" title="Detalhes">
+                                                <i class="fa fa-edit fa-lg"></i>
+                                            </a>
+
+                                            <a href="{{ path('go_admin_way_edit', {'id': way.id}) }}"
+                                                class="btn btn-info btn-flat" title="Editar">
+                                                <i class="fa fa-edit fa-lg"></i>
+                                            </a>
+
+                                            <a href="{{ path('go_admin_way_delete', {'id': way.id}) }}"
+                                                class="btn btn-danger btn-flat" title="Apagar">
+                                                <i class="fa fa-trash-o fa-lg"></i>
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

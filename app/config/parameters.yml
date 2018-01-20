@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: mysql05-farm62.kinghost.net
+    database_port: 3306
+    database_name: viniciustessma
+    database_user: viniciustessma
+    database_password: Julia84049044
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: viniciusschleetessmann@gmail.com   
+    mailer_password: tessmann123*
+    secret: ThisTokenIsNotSoSecretChangeIt

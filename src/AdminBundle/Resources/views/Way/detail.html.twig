@@ -1,0 +1,97 @@
+{% extends '@AdminBundle/Resources/views/base.html.twig' %}
+{% block content %}
+
+    <div class="col-md-6">
+        <div class="btn-group">
+            <a type="button" href="{{ path('go_admin_way_index') }}" class="btn btn-default btn-flat">
+                <i class="fa fa-arrow-left"></i> Listagem
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        
+            <div class="box-body">
+                <div class="form-group">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                        <h3 class="box-title">{{way.name}}</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                        <strong><i class="fa fa-book margin-r-5"></i> Valor</strong>
+                        <p class="text-muted">
+                            R$ {{way.value}}
+                        </p>
+                        <hr>
+
+                        <strong><i class="fa fa-book margin-r-5"></i> Minimo de passageiros</strong>
+                        <p class="text-muted">
+                            {{way.min}} pessoas
+                        </p>
+                        <hr>
+
+                        <strong><i class="fa fa-book margin-r-5"></i> Saida</strong>
+                        <p class="text-muted">
+                            {{ way.start|date('h:m:s') }} 
+                        </p>
+                        <hr>
+
+                        <strong><i class="fa fa-book margin-r-5"></i> Chegada</strong>
+                        <p class="text-muted">
+                             {{ way.end|date('h:m:s') }} 
+                        </p>
+                        <hr>
+                        
+                    </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table role="grid" class="table table-bordered table-striped dataTable" id="dtable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Endereço</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for point in way.points %}
+                    <tr>
+                        <td>{{ point.id }}</td>
+                        <td>{{ point.name }}</td>
+                        <td>{{ point.address }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+        <div class="row">
+        <div class="col-sm-12">
+            <table role="grid" class="table table-bordered table-striped dataTable" id="dtable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    {# <th>Endereço</th> #}
+                </tr>
+                </thead>
+                <tbody>
+                {% for point in way.passengers %}
+                    <tr>
+                        <td>{{ point.id }}</td>
+                        <td>{{ point.name }}</td>
+                        {# <td>{{ point.address }}</td> #}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+{% endblock %}

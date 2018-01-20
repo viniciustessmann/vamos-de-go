@@ -1,0 +1,38 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/service_container.html
+parameters:
+    #parameter_name: value
+
+services:
+    #service_name:
+    #    class: AppBundle\Directory\ClassName
+    #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
+
+    # makes classes in src/AppBundle available to be used as services
+    neighborhood_service:
+        class:     AdminBundle\Services\NeighborhoodService
+        arguments: ['@doctrine.orm.entity_manager']
+
+    point_service:
+        class:     AdminBundle\Services\PointService
+        arguments: ['@doctrine.orm.entity_manager']
+
+    way_service:
+        class:     AdminBundle\Services\WayService
+        arguments: ['@doctrine.orm.entity_manager']
+
+    newsletter_service:
+        class:     AdminBundle\Services\NewsletterService
+        arguments: ['@doctrine.orm.entity_manager']
+
+    driver_service:
+        class:     AdminBundle\Services\DriverService
+        arguments: ['@doctrine.orm.entity_manager']
+
+    passenger_service:
+        class:     AdminBundle\Services\PassengerService
+        arguments: ['@doctrine.orm.entity_manager']
+
+    address_service:
+        class:     AdminBundle\Services\AddressService
+        arguments: ['@doctrine.orm.entity_manager']
