@@ -3,6 +3,7 @@
 namespace AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Address
@@ -49,10 +50,14 @@ class Address
     private $neighborhood;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Passenger", inversedBy="address")
-     * @ORM\JoinColumn(name="passenger_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="User", mappedBy="Address")
      */
-    private $passenger;
+    private $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -69,6 +74,11 @@ class Address
         $this->address = $address;
     }
 
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
     public function setCep($cep)
     {
         $this->cep = $cep;
@@ -79,18 +89,33 @@ class Address
         $this->number = $number;
     }
 
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
     public function setNeighborhood(Neighborhood $neighborhood)
     {
         $this->neighborhood = $neighborhood;
     }
 
-    public function setPassenger($passenger)
+    public function setUser($user)
     {
-        $this->passenger = $passenger;
+        $this->user = $user;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
     }
 
     public function setCreated($created)
     {
         $this->created = $created;
+    }
+
+    public function getNeighborhood()
+    {
+        return $this->neighborhood;
     }
 }

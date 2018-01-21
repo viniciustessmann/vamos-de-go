@@ -36,3 +36,7 @@ services:
     address_service:
         class:     AdminBundle\Services\AddressService
         arguments: ['@doctrine.orm.entity_manager']
+
+    user_service:
+        class:     AdminBundle\Services\UserService
+        arguments: ['@doctrine.orm.entity_manager']

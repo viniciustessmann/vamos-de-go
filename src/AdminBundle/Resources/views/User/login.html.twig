@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Eletricista do Futuro | Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    {# {% block stylesheets %}
+        {% stylesheets
+        '@AdminBundle/Resources/public/css/skins/_all-skins.min.css'
+        '@AdminBundle/Resources/public/css/AdminLTE.min.css'
+        '@AdminBundle/Resources/public/css/font-awesome.min.css'
+        '@AdminBundle/Resources/public/css/ionicons.css'
+        '@AdminBundle/Resources/public/css/dataTables.bootstrap.css' %}
+
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+        {% endstylesheets %}
+    {% endblock %} #}
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        {# {% image '@SiteBundle/Resources/public/images/logo.png' %}
+        <img src="{{ asset_url }}" class="logo__image" alt="Eletricista do Futuro"/>
+        {% endimage %} #}
+        <h1>Eletricista do Futuro</h1>
+    </div>
+
+    <div class="login-box-body">
+        {# {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %} #}
+
+        <form action="{{ path("go_fos_user_security_check") }}" method="post">
+            {% if csrf_token %}
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+            {% endif %}
+
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" name="_username" placeholder="E-mail">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" class="form-control" placeholder="Password" name="_password">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Acessar</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

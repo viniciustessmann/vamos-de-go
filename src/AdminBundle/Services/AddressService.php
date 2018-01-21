@@ -55,4 +55,14 @@ class AddressService
     {
         return $this->em->getRepository(Address::class)->findAll();
     }
+
+    /**
+     * Gets all Post data.
+     *
+     * @return array
+     */
+    public function findByUser($user_id)
+    {
+        return $this->em->getRepository(Address::class)->find(['user_id' => $user_id]);
+    }
 }
