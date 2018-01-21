@@ -45,6 +45,11 @@
                                         <td>{{ user.username }}</td>
                                         <td>{{ user.email }}</td>
                                         <td>
+                                            <a href="{{ path('go_admin_user_detail', {'id': user.id}) }}"
+                                                class="btn btn-info btn-flat" title="Detalhes">
+                                                <i class="fa fa-edit fa-lg"></i>
+                                            </a>
+
                                             <a href="{{ path('go_admin_user_edit', {'id': user.id}) }}"
                                                 class="btn btn-info btn-flat" title="Editar">
                                                 <i class="fa fa-edit fa-lg"></i>

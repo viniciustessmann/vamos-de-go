@@ -631,7 +631,7 @@
                 <tag name="cache.pool" clearer="cache.default_clearer"/>
                 <argument>6MJRM+WXpn</argument>
                 <argument>0</argument>
-                <argument>DOYZX-l0Qs5pcG8fPoy8Q+</argument>
+                <argument>kPyM6XPwI5LhcEPQ13hvTP</argument>
                 <argument>/Applications/XAMPP/xamppfiles/htdocs/vamos-de-go/var/cache/dev/pools</argument>
                 <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
                 <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -814,7 +814,7 @@
       <tag name="cache.pool" clearer="cache.default_clearer"/>
       <argument>Arirp1iNyJ</argument>
       <argument>0</argument>
-      <argument>DOYZX-l0Qs5pcG8fPoy8Q+</argument>
+      <argument>kPyM6XPwI5LhcEPQ13hvTP</argument>
       <argument>/Applications/XAMPP/xamppfiles/htdocs/vamos-de-go/var/cache/dev/pools</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -824,7 +824,7 @@
       <tag name="cache.pool" clearer="cache.default_clearer"/>
       <argument>nho3eQ4LFI</argument>
       <argument>0</argument>
-      <argument>DOYZX-l0Qs5pcG8fPoy8Q+</argument>
+      <argument>kPyM6XPwI5LhcEPQ13hvTP</argument>
       <argument>/Applications/XAMPP/xamppfiles/htdocs/vamos-de-go/var/cache/dev/pools</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -1874,7 +1874,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>5a64f4d3930040.30096149</argument>
+            <argument>5a64ffe494aa16.98676176</argument>
           </service>
         </argument>
         <argument type="service">
@@ -1888,7 +1888,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>5a64f4d3930040.30096149</argument>
+            <argument>5a64ffe494aa16.98676176</argument>
           </service>
         </argument>
       </argument>
@@ -2019,17 +2019,6 @@
         </argument>
         <argument type="collection">
           <argument>IS_AUTHENTICATED_ANONYMOUSLY</argument>
-        </argument>
-        <argument>null</argument>
-      </call>
-      <call method="add">
-        <argument type="service">
-          <service class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
-            <argument>^/admin/</argument>
-          </service>
-        </argument>
-        <argument type="collection">
-          <argument>ROLE_ADMIN</argument>
         </argument>
         <argument>null</argument>
       </call>
@@ -2188,7 +2177,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
-            <argument>5a64f4d3930040.30096149</argument>
+            <argument>5a64ffe494aa16.98676176</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -2330,7 +2319,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
-            <argument>5a64f4d3930040.30096149</argument>
+            <argument>5a64ffe494aa16.98676176</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>

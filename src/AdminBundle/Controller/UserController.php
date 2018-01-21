@@ -11,6 +11,9 @@ use AdminBundle\Entity\User;
 use FOS\UserBundle\Doctrine\UserManager;
 use FOS\UserBundle\Model\UserManagerInterface;
 use AdminBundle\Services\UserService;
+use AdminBundle\Services\AddressService;
+use AdminBundle\Entity\Address;
+use AdminBundle\Repository\AddressRepository;
 
 
 class UserController extends Controller
@@ -22,6 +25,8 @@ class UserController extends Controller
     {   
         $userService = $this->get('user_service');
         $users = $userService->findAll();
+
+       
 
         return $this->render('AdminBundle:User:index.html.twig', [
             'users' => $users
@@ -40,8 +45,6 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) { 
             try {
-                
-
                 $userManager = $this->get('fos_user.user_manager');
                 $userManager->createUser($user);
 
@@ -116,5 +119,35 @@ class UserController extends Controller
     public function loginAction(Request $request)
     {   
         
+    }
+
+
+     /**
+     * @Route("/detalhes_usuario/{id}", name="go_admin_user_detail")
+     */
+    public function detailAction(USer $user)
+    {   
+
+        $addressService = $this->get('address_service');
+        // $address = $addressService->findByUser($user->getId());
+
+        //$address = $user->getAddress();
+        // echo '<pre>';
+        // var_dump($address);
+        // die;
+
+        // // $address = $user->getAddress();
+
+        // echo '<pre>';
+        // foreach ($address as $item) {
+        //     var_dump($item->getAddress());
+        // }
+        // 
+        // die;
+
+        return $this->render('AdminBundle:User:detail.html.twig', [
+            'user' => $user,
+            // 'address' => $address
+        ]);
     }
 }

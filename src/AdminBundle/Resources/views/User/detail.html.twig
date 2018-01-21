@@ -1,0 +1,13 @@
+{% extends '@AdminBundle/Resources/views/base.html.twig' %}
+{% block content %}
+
+<p>{{user.username}}</p>
+<p>{{user.email}}</p>
+
+{# <p>{{user.address.number}}</p> #}
+
+{% for item in user.address %}
+<p>{{item.address}} - {{item.number}} </p>
+{% endfor %}
+
+{% endblock %}

@@ -8,11 +8,14 @@ use AdminBundle\Services\NewsletterService;
 use AdminBundle\Services\NeighborhoodService;
 use AdminBundle\Services\PassengerService;
 use AdminBundle\Services\AddressService;
+use AdminBundle\Services\UserService;
 use AdminBundle\Entity\Newsletter;
 use AdminBundle\Entity\Address;
 use AdminBundle\Entity\Passenger;
+use AdminBundle\Entity\User;
 use SiteBundle\Form\NewsletterType;
 use SiteBundle\Form\PassengerType;
+use SiteBundle\Form\UserType;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
@@ -22,34 +25,39 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $passenger = new Passenger();
+        $user = new User();
 
-        $form = $this->createForm(PassengerType::class, $passenger);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) { 
             try {
                 
-                $passengerService = $this->get('passenger_service');
-                $passengerService->save($passenger);
+                $userManager = $this->get('fos_user.user_manager');
+                $userManager->createUser($user);
 
-                $addressService = $this->get('address_service');
+                $user->setRoles(['ROLE_ADMIN']);
+                $user->setPlainPassword('test');
+                $user->setEnabled(true);
 
                 $neighborhoodService = $this->get('neighborhood_service');
-                $neighborhood = $neighborhoodService->findById($request->request->get('passenger')['neighborhood']);
+                $neighborhood = $neighborhoodService->findById($request->request->get('user')['neighborhood']);
 
+                
 
                 $address = new Address();
-                $address->setAddress($request->request->get('passenger')['address']);
-                $address->setCep($request->request->get('passenger')['cep']);
-                $address->setNumber($request->request->get('passenger')['number']);
+                $address->setAddress($request->request->get('user')['address']);
+                $address->setCep($request->request->get('user')['cep']);
+                $address->setNumber($request->request->get('user')['number']);
                 $address->setNeighborhood($neighborhood);
+                $address->setUser($user);
 
-
-                $address->setPassenger($passenger);
+                $addressService = $this->get('address_service');
                 $addressService->save($address);
 
-
+                $user->setAddress($address);
+                $userService = $this->get('user_service');
+                $userService->save($user);
 
                 $this->addFlash('success', 'Cliente criado com sucesso!');
                 return $this->redirectToRoute('home', ['status' => 1]);

@@ -10,4 +10,12 @@ namespace AdminBundle\Repository;
  */
 class AddressRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAddressByUser($user_id)
+    {   
+    
+
+        return $this->createQueryBuilder('address')
+            ->where('address.user_id', $user_id)
+            ->orderBy('address.name', 'ASC');
+    }
 }

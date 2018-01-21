@@ -5,6 +5,7 @@ namespace AdminBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -19,12 +20,23 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="phone", type="string", nullable=true)
+     */
+    private $phone;
+
+     /**
+     * @ORM\ManyToOne(targetEntity="Address", inversedBy="User")
+     * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
+     */
+    private $address;
 
 
     public function __construct()
     {
         parent::__construct();
-        // your own logic
     }
 
     public function getUSerEmail() 
@@ -36,6 +48,15 @@ class User extends BaseUser
         return $this->name;
     }
 
+    public function getPhone(){
+        return $this->phone;
+    }
+
+    public function setPhone($phone)
+    {
+
+    }
+    
     /**
      * set Created.
      *
@@ -44,5 +65,15 @@ class User extends BaseUser
     public function setCreated($created)
     {
         $this->created = $created;
+    }
+
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    public function setAddress($address)
+    {
+        $this->address = $address;
     }
 }
