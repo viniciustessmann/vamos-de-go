@@ -19,12 +19,6 @@ class User extends BaseUser
      */
     protected $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="useremail", type="string")
-     */
-    private $useremail;
 
 
     public function __construct()
@@ -36,5 +30,19 @@ class User extends BaseUser
     public function getUSerEmail() 
     {
         return $this->useremail;
+    }
+
+    public function getName(){
+        return $this->name;
+    }
+
+    /**
+     * set Created.
+     *
+     * @return string
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
     }
 }

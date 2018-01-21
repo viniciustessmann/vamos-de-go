@@ -15,11 +15,11 @@ class __TwigTemplate_ea50ad14390e0a1033ec4d181a6ad3dfd9c33e637a76ad186fe6a007d25
 
     protected function doDisplay(array $context, array $blocks = array())
     {
-        $__internal_8c93ebf040d3ccc8908d24d3cbeb5cb4426ec64f47336d8ad7c8d3c25b749cfe = $this->env->getExtension("Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension");
-        $__internal_8c93ebf040d3ccc8908d24d3cbeb5cb4426ec64f47336d8ad7c8d3c25b749cfe->enter($__internal_8c93ebf040d3ccc8908d24d3cbeb5cb4426ec64f47336d8ad7c8d3c25b749cfe_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "DoctrineBundle:Collector:explain.html.twig"));
+        $__internal_50c10163dec3f9deb2d9d714a73baf6077f43a0237ef0bfc00937a2ddcc2e58f = $this->env->getExtension("Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension");
+        $__internal_50c10163dec3f9deb2d9d714a73baf6077f43a0237ef0bfc00937a2ddcc2e58f->enter($__internal_50c10163dec3f9deb2d9d714a73baf6077f43a0237ef0bfc00937a2ddcc2e58f_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "DoctrineBundle:Collector:explain.html.twig"));
 
-        $__internal_a11ffdf210d26e010732e4b2814de1b0ae9cac0f05799cebd9c0b12eca0e6788 = $this->env->getExtension("Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension");
-        $__internal_a11ffdf210d26e010732e4b2814de1b0ae9cac0f05799cebd9c0b12eca0e6788->enter($__internal_a11ffdf210d26e010732e4b2814de1b0ae9cac0f05799cebd9c0b12eca0e6788_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "DoctrineBundle:Collector:explain.html.twig"));
+        $__internal_4d7600464113cbf79e7d2206f979a272176d49361b9f7b298ef3e30024e7ec2f = $this->env->getExtension("Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension");
+        $__internal_4d7600464113cbf79e7d2206f979a272176d49361b9f7b298ef3e30024e7ec2f->enter($__internal_4d7600464113cbf79e7d2206f979a272176d49361b9f7b298ef3e30024e7ec2f_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "DoctrineBundle:Collector:explain.html.twig"));
 
         // line 1
         if ((twig_length_filter($this->env, twig_get_attribute($this->env, $this->getSourceContext(), (isset($context["data"]) || array_key_exists("data", $context) ? $context["data"] : (function () { throw new Twig_Error_Runtime('Variable "data" does not exist.', 1, $this->getSourceContext()); })()), 0, array(), "array")) > 1)) {
@@ -101,10 +101,10 @@ class __TwigTemplate_ea50ad14390e0a1033ec4d181a6ad3dfd9c33e637a76ad186fe6a007d25
 ";
         }
         
-        $__internal_8c93ebf040d3ccc8908d24d3cbeb5cb4426ec64f47336d8ad7c8d3c25b749cfe->leave($__internal_8c93ebf040d3ccc8908d24d3cbeb5cb4426ec64f47336d8ad7c8d3c25b749cfe_prof);
+        $__internal_50c10163dec3f9deb2d9d714a73baf6077f43a0237ef0bfc00937a2ddcc2e58f->leave($__internal_50c10163dec3f9deb2d9d714a73baf6077f43a0237ef0bfc00937a2ddcc2e58f_prof);
 
         
-        $__internal_a11ffdf210d26e010732e4b2814de1b0ae9cac0f05799cebd9c0b12eca0e6788->leave($__internal_a11ffdf210d26e010732e4b2814de1b0ae9cac0f05799cebd9c0b12eca0e6788_prof);
+        $__internal_4d7600464113cbf79e7d2206f979a272176d49361b9f7b298ef3e30024e7ec2f->leave($__internal_4d7600464113cbf79e7d2206f979a272176d49361b9f7b298ef3e30024e7ec2f_prof);
 
     }
 
