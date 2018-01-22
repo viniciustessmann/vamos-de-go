@@ -64,10 +64,10 @@ class Address extends \AdminBundle\Entity\Address implements \Doctrine\ORM\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'id', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'address', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'number', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'cep', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'neighborhood', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'passenger'];
+            return ['__isInitialized__', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'id', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'address', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'number', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'cep', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'neighborhood', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'users'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'id', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'address', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'number', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'cep', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'neighborhood', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'passenger'];
+        return ['__isInitialized__', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'id', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'address', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'number', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'cep', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'neighborhood', '' . "\0" . 'AdminBundle\\Entity\\Address' . "\0" . 'users'];
     }
 
     /**
@@ -202,6 +202,17 @@ class Address extends \AdminBundle\Entity\Address implements \Doctrine\ORM\Proxy
     /**
      * {@inheritDoc}
      */
+    public function getAddress()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAddress', []);
+
+        return parent::getAddress();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setCep($cep)
     {
 
@@ -224,6 +235,17 @@ class Address extends \AdminBundle\Entity\Address implements \Doctrine\ORM\Proxy
     /**
      * {@inheritDoc}
      */
+    public function getNumber()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNumber', []);
+
+        return parent::getNumber();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setNeighborhood(\AdminBundle\Entity\Neighborhood $neighborhood)
     {
 
@@ -235,12 +257,23 @@ class Address extends \AdminBundle\Entity\Address implements \Doctrine\ORM\Proxy
     /**
      * {@inheritDoc}
      */
-    public function setPassenger($passenger)
+    public function setUser($user)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPassenger', [$passenger]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setUser', [$user]);
 
-        return parent::setPassenger($passenger);
+        return parent::setUser($user);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getUser()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUser', []);
+
+        return parent::getUser();
     }
 
     /**

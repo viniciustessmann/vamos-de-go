@@ -64,10 +64,10 @@ class User extends \AdminBundle\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'username', 'usernameCanonical', 'email', 'emailCanonical', 'enabled', 'salt', 'password', 'plainPassword', 'lastLogin', 'confirmationToken', 'passwordRequestedAt', 'groups', 'roles'];
+            return ['__isInitialized__', 'id', '' . "\0" . 'AdminBundle\\Entity\\User' . "\0" . 'phone', '' . "\0" . 'AdminBundle\\Entity\\User' . "\0" . 'address', 'username', 'usernameCanonical', 'email', 'emailCanonical', 'enabled', 'salt', 'password', 'plainPassword', 'lastLogin', 'confirmationToken', 'passwordRequestedAt', 'groups', 'roles'];
         }
 
-        return ['__isInitialized__', 'id', 'username', 'usernameCanonical', 'email', 'emailCanonical', 'enabled', 'salt', 'password', 'plainPassword', 'lastLogin', 'confirmationToken', 'passwordRequestedAt', 'groups', 'roles'];
+        return ['__isInitialized__', 'id', '' . "\0" . 'AdminBundle\\Entity\\User' . "\0" . 'phone', '' . "\0" . 'AdminBundle\\Entity\\User' . "\0" . 'address', 'username', 'usernameCanonical', 'email', 'emailCanonical', 'enabled', 'salt', 'password', 'plainPassword', 'lastLogin', 'confirmationToken', 'passwordRequestedAt', 'groups', 'roles'];
     }
 
     /**
@@ -198,12 +198,56 @@ class User extends \AdminBundle\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
+    public function getPhone()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPhone', []);
+
+        return parent::getPhone();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setPhone($phone)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setPhone', [$phone]);
+
+        return parent::setPhone($phone);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setCreated($created)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setCreated', [$created]);
 
         return parent::setCreated($created);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAddress()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAddress', []);
+
+        return parent::getAddress();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setAddress($address)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAddress', [$address]);
+
+        return parent::setAddress($address);
     }
 
     /**

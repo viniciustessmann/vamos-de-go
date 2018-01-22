@@ -631,7 +631,7 @@
                 <tag name="cache.pool" clearer="cache.default_clearer"/>
                 <argument>6MJRM+WXpn</argument>
                 <argument>0</argument>
-                <argument>kPyM6XPwI5LhcEPQ13hvTP</argument>
+                <argument>PtPOD8aEPysU7hsp1-8giD</argument>
                 <argument>/Applications/XAMPP/xamppfiles/htdocs/vamos-de-go/var/cache/dev/pools</argument>
                 <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
                 <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -814,7 +814,7 @@
       <tag name="cache.pool" clearer="cache.default_clearer"/>
       <argument>Arirp1iNyJ</argument>
       <argument>0</argument>
-      <argument>kPyM6XPwI5LhcEPQ13hvTP</argument>
+      <argument>PtPOD8aEPysU7hsp1-8giD</argument>
       <argument>/Applications/XAMPP/xamppfiles/htdocs/vamos-de-go/var/cache/dev/pools</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -824,7 +824,7 @@
       <tag name="cache.pool" clearer="cache.default_clearer"/>
       <argument>nho3eQ4LFI</argument>
       <argument>0</argument>
-      <argument>kPyM6XPwI5LhcEPQ13hvTP</argument>
+      <argument>PtPOD8aEPysU7hsp1-8giD</argument>
       <argument>/Applications/XAMPP/xamppfiles/htdocs/vamos-de-go/var/cache/dev/pools</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -1865,7 +1865,7 @@
       <argument type="collection">
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider" public="false">
-            <argument type="service" id="fos_user.user_provider.username"/>
+            <argument type="service" id="fos_user.user_provider.username_email"/>
             <argument type="service" id="security.user_checker"/>
             <argument>admin</argument>
             <argument type="service" id="security.encoder_factory"/>
@@ -1874,12 +1874,12 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>5a64ffe494aa16.98676176</argument>
+            <argument>5a653121490282.33591377</argument>
           </service>
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider" public="false">
-            <argument type="service" id="fos_user.user_provider.username"/>
+            <argument type="service" id="fos_user.user_provider.username_email"/>
             <argument type="service" id="security.user_checker"/>
             <argument>main</argument>
             <argument type="service" id="security.encoder_factory"/>
@@ -1888,7 +1888,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>5a64ffe494aa16.98676176</argument>
+            <argument>5a653121490282.33591377</argument>
           </service>
         </argument>
       </argument>
@@ -2022,6 +2022,17 @@
         </argument>
         <argument>null</argument>
       </call>
+      <call method="add">
+        <argument type="service">
+          <service class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
+            <argument>^/admin/</argument>
+          </service>
+        </argument>
+        <argument type="collection">
+          <argument>ROLE_ADMIN</argument>
+        </argument>
+        <argument>null</argument>
+      </call>
     </service>
     <service id="security.logout.handler.session" class="Symfony\Component\Security\Http\Logout\SessionLogoutHandler" public="false"/>
     <service id="security.access_listener" class="Symfony\Component\Security\Http\Firewall\AccessListener" public="false">
@@ -2089,7 +2100,7 @@
           <service class="Symfony\Component\Security\Http\Firewall\ContextListener" public="false">
             <argument type="service" id="security.token_storage"/>
             <argument type="collection">
-              <argument type="service" id="fos_user.user_provider.username"/>
+              <argument type="service" id="fos_user.user_provider.username_email"/>
             </argument>
             <argument>admin</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
@@ -2177,7 +2188,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
-            <argument>5a64ffe494aa16.98676176</argument>
+            <argument>5a653121490282.33591377</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -2211,7 +2222,7 @@
           <argument>security.request_matcher.a64d671f18e5575531d76c1d1154fdc4476cb8a79c02ed7a3469178c6d7b96b5ed4e60db</argument>
           <argument>true</argument>
           <argument>false</argument>
-          <argument>fos_user.user_provider.username</argument>
+          <argument>fos_user.user_provider.username_email</argument>
           <argument>admin</argument>
           <argument>security.authentication.form_entry_point.admin</argument>
           <argument>null</argument>
@@ -2231,7 +2242,7 @@
           <service class="Symfony\Component\Security\Http\Firewall\ContextListener" public="false">
             <argument type="service" id="security.token_storage"/>
             <argument type="collection">
-              <argument type="service" id="fos_user.user_provider.username"/>
+              <argument type="service" id="fos_user.user_provider.username_email"/>
             </argument>
             <argument>main</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
@@ -2319,7 +2330,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
-            <argument>5a64ffe494aa16.98676176</argument>
+            <argument>5a653121490282.33591377</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -2353,7 +2364,7 @@
           <argument>security.request_matcher.a64d671f18e5575531d76c1d1154fdc4476cb8a79c02ed7a3469178c6d7b96b5ed4e60db</argument>
           <argument>true</argument>
           <argument>false</argument>
-          <argument>fos_user.user_provider.username</argument>
+          <argument>fos_user.user_provider.username_email</argument>
           <argument>main</argument>
           <argument>security.authentication.form_entry_point.main</argument>
           <argument>null</argument>
@@ -3524,7 +3535,7 @@
       <argument type="service" id="request_stack"/>
       <argument>null</argument>
     </service>
-    <service id="fos_user.user_provider.username" class="FOS\UserBundle\Security\UserProvider" public="false">
+    <service id="fos_user.user_provider.username_email" class="FOS\UserBundle\Security\EmailUserProvider" public="false">
       <argument type="service" id="fos_user.user_manager"/>
     </service>
     <service id="fos_user.util.user_manipulator" class="FOS\UserBundle\Util\UserManipulator">

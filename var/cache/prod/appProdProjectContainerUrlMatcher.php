@@ -224,6 +224,11 @@ class appProdProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBundle\R
                 return array (  '_controller' => 'AdminBundle\\Controller\\UserController::loginAction',  '_route' => 'go_admin_login',);
             }
 
+            // go_admin_user_detail
+            if (0 === strpos($pathinfo, '/admin/detalhes_usuario') && preg_match('#^/admin/detalhes_usuario/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'go_admin_user_detail')), array (  '_controller' => 'AdminBundle\\Controller\\UserController::detailAction',));
+            }
+
         }
 
         if (0 === strpos($pathinfo, '/log')) {

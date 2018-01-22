@@ -290,6 +290,28 @@ class Passenger extends \AdminBundle\Entity\Passenger implements \Doctrine\ORM\P
     /**
      * {@inheritDoc}
      */
+    public function getAddress()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAddress', []);
+
+        return parent::getAddress();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setAddress($address)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAddress', [$address]);
+
+        return parent::setAddress($address);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function addRole($role)
     {
 

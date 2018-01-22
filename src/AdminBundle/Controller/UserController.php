@@ -49,7 +49,7 @@ class UserController extends Controller
                 $userManager->createUser($user);
 
                 $user->setRoles(['ROLE_ADMIN']);
-                $user->setPlainPassword('test');
+                $user->setPlainPassword('admin123*');
                 $user->setEnabled(true);
 
                 $userService = $this->get('user_service');

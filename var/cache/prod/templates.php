@@ -91,6 +91,7 @@
   'AdminBundle:User:new.html.twig' => __DIR__.'/../../../src/AdminBundle/Resources/views/User/new.html.twig',
   'AdminBundle:User:index.html.twig' => __DIR__.'/../../../src/AdminBundle/Resources/views/User/index.html.twig',
   'AdminBundle:User:login.html.twig' => __DIR__.'/../../../src/AdminBundle/Resources/views/User/login.html.twig',
+  'AdminBundle:User:detail.html.twig' => __DIR__.'/../../../src/AdminBundle/Resources/views/User/detail.html.twig',
   'AdminBundle:Neighborhood:new.html.twig' => __DIR__.'/../../../src/AdminBundle/Resources/views/Neighborhood/new.html.twig',
   'AdminBundle:Neighborhood:index.html.twig' => __DIR__.'/../../../src/AdminBundle/Resources/views/Neighborhood/index.html.twig',
   'AdminBundle:Newsletter:new.html.twig' => __DIR__.'/../../../src/AdminBundle/Resources/views/Newsletter/new.html.twig',
