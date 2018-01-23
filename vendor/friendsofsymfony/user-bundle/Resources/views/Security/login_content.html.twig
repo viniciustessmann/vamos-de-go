@@ -1,22 +1,45 @@
-{% trans_default_domain 'FOSUserBundle' %}
+<body class="hold-transition login-page" data-gr-c-s-loaded="true">
 
-{% if error %}
-    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-{% endif %}
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<form action="{{ path("fos_user_security_check") }}" method="post">
-    {% if csrf_token %}
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-    {% endif %}
+    {% block stylesheets %}
+        {% stylesheets
+        '@AdminBundle/Resources/public/css/skins/_all-skins.min.css'
+        '@AdminBundle/Resources/public/css/AdminLTE.min.css'
+        '@AdminBundle/Resources/public/css/font-awesome.min.css'
+        '@AdminBundle/Resources/public/css/ionicons.css'
+        '@AdminBundle/Resources/public/plugins/datatables.net-bs/css/dataTables.bootstrap.min.css'
+        '@AdminBundle/Resources/public/plugins/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css'        
+        '@AdminBundle/Resources/public/css/possible/fixes.css' %}
 
-    <label for="username">{{ 'security.login.username'|trans }}</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+        {% endstylesheets %}
+    {% endblock %}
 
-    <label for="password">{{ 'security.login.password'|trans }}</label>
-    <input type="password" id="password" name="_password" required="required" />
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="{{ path('home') }}"><b>Vamos de </b>GO!</a>
+        </div>
 
-    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+        <div class="login-box-body">
+            <form action="{{ path("fos_user_security_check") }}" method="post">
+                {% if csrf_token %}
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                {% endif %}
 
-    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
-</form>
+                <div class="form-group has-feedback">
+                    <input type="text" id="username" class="form-control" name="_username" value="{{ last_username }}" required="required" />
+                </div>
+
+                <div class="form-group has-feedback">
+                    <input type="password" id="password" class="form-control" name="_password" required="required" />
+                </div>
+
+                <div class="form-group has-feedback">
+                    <input type="submit" id="_submit" name="_submit" class="btn btn-primary btn-block btn-flat" value="Acessar" />
+                </div>
+            </form>
+        </div>
+    </div>
+</body>

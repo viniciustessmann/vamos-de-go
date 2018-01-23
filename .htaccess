@@ -1,0 +1,11 @@
+##### LOCAWEB - NAO REMOVER #####
+AddHandler php71-script .php
+suPHP_ConfigPath /home/novaplataforma1/
+##### LOCAWEB - NAO REMOVER #####
+
+# Rewrite all requests to subdirectory, except exists file requests
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ /web/$1 [QSA,L]
+</IfModule>
