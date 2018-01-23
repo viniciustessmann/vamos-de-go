@@ -13,7 +13,7 @@ Cache Drivers
 
 The cache drivers follow a simple interface that is defined in
 ``Doctrine\Common\Cache\Cache``. All the cache drivers extend a
-base class ``Doctrine\Common\Cache\CacheProvider`` which implements
+base class ``Doctrine\Common\Cache\AbstractCache`` which implements
 this interface.
 
 The interface defines the following public methods for you to implement:
@@ -21,10 +21,10 @@ The interface defines the following public methods for you to implement:
 
 -  fetch($id) - Fetches an entry from the cache
 -  contains($id) - Test if an entry exists in the cache
--  save($id, $data, $lifeTime = false) - Puts data into the cache for x seconds. 0 = infinite time
+-  save($id, $data, $lifeTime = false) - Puts data into the cache
 -  delete($id) - Deletes a cache entry
 
-Each driver extends the ``CacheProvider`` class which defines a few
+Each driver extends the ``AbstractCache`` class which defines a few
 abstract protected methods that each of the drivers must
 implement:
 
@@ -38,12 +38,8 @@ The public methods ``fetch()``, ``contains()`` etc. use the
 above protected methods which are implemented by the drivers. The
 code is organized this way so that the protected methods in the
 drivers do the raw interaction with the cache implementation and
-the ``CacheProvider`` can build custom functionality on top of
+the ``AbstractCache`` can build custom functionality on top of
 these methods.
-
-This documentation does not cover every single cache driver included
-with Doctrine. For an up-to-date-list, see the
-`cache directory on GitHub <https://github.com/doctrine/cache/tree/master/lib/Doctrine/Common/Cache>`.
 
 APC
 ~~~
@@ -61,24 +57,6 @@ by itself.
 
     <?php
     $cacheDriver = new \Doctrine\Common\Cache\ApcCache();
-    $cacheDriver->save('cache_id', 'my_data');
-
-APCu
-~~~~
-
-In order to use the APCu cache driver you must have it compiled and
-enabled in your php.ini. You can read about APCu
-`in the PHP Documentation <http://us2.php.net/apcu>`_. It will give
-you a little background information about what it is and how you
-can use it as well as how to install it.
-
-Below is a simple example of how you could use the APCu cache driver
-by itself.
-
-.. code-block:: php
-
-    <?php
-    $cacheDriver = new \Doctrine\Common\Cache\ApcuCache();
     $cacheDriver->save('cache_id', 'my_data');
 
 Memcache
@@ -104,7 +82,7 @@ driver by itself.
     $cacheDriver->save('cache_id', 'my_data');
 
 Memcached
-~~~~~~~~~
+~~~~~~~~
 
 Memcached is a more recent and complete alternative extension to
 Memcache.
@@ -305,7 +283,7 @@ use on your ORM configuration.
 
     <?php
     $config = new \Doctrine\ORM\Configuration();
-    $config->setQueryCacheImpl(new \Doctrine\Common\Cache\ApcuCache());
+    $config->setQueryCacheImpl(new \Doctrine\Common\Cache\ApcCache());
 
 Result Cache
 ~~~~~~~~~~~~
@@ -318,7 +296,7 @@ cache implementation.
 .. code-block:: php
 
     <?php
-    $config->setResultCacheImpl(new \Doctrine\Common\Cache\ApcuCache());
+    $config->setResultCacheImpl(new \Doctrine\Common\Cache\ApcCache());
 
 Now when you're executing DQL queries you can configure them to use
 the result cache.
@@ -335,7 +313,7 @@ result cache driver.
 .. code-block:: php
 
     <?php
-    $query->setResultCacheDriver(new \Doctrine\Common\Cache\ApcuCache());
+    $query->setResultCacheDriver(new \Doctrine\Common\Cache\ApcCache());
 
 .. note::
 
@@ -387,7 +365,7 @@ first.
 .. code-block:: php
 
     <?php
-    $config->setMetadataCacheImpl(new \Doctrine\Common\Cache\ApcuCache());
+    $config->setMetadataCacheImpl(new \Doctrine\Common\Cache\ApcCache());
 
 Now the metadata information will only be parsed once and stored in
 the cache driver.
@@ -422,39 +400,6 @@ To clear the result cache use the ``orm:clear-cache:result`` task.
 
 All these tasks accept a ``--flush`` option to flush the entire
 contents of the cache instead of invalidating the entries.
-
-Cache Chaining
---------------
-
-A common pattern is to use a static cache to store data that is
-requested many times in a single PHP request. Even though this data
-may be stored in a fast memory cache, often that cache is over a
-network link leading to sizable network traffic.
-
-The ChainCache class allows multiple caches to be registered at once.
-For example, a per-request ArrayCache can be used first, followed by
-a (relatively) slower MemcacheCache if the ArrayCache misses.
-ChainCache automatically handles pushing data up to faster caches in
-the chain and clearing data in the entire stack when it is deleted.
-
-A ChainCache takes a simple array of CacheProviders in the order that
-they should be used.
-
-.. code-block:: php
-
-    $arrayCache = new \Doctrine\Common\Cache\ArrayCache();
-    $memcache = new Memcache();
-    $memcache->connect('memcache_host', 11211);
-    $chainCache = new \Doctrine\Common\Cache\ChainCache([
-        $arrayCache,
-        $memcache,
-    ]);
-
-ChainCache itself extends the CacheProvider interface, so it is
-possible to create chains of chains. While this may seem like an easy
-way to build a simple high-availability cache, ChainCache does not
-implement any exception handling so using it as a high-availability
-mechanism is not recommended.
 
 Cache Slams
 -----------

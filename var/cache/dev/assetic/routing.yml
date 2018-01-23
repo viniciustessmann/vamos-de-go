@@ -2,4 +2,4 @@ _assetic:
     resource: .
     type: assetic
 _app:
-    resource: /Applications/XAMPP/xamppfiles/htdocs/vamos-de-go/app/config/routing_dev.yml
+    resource: /home/vinicius/projects/vamos-de-go/app/config/routing_dev.yml

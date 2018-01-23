@@ -34,6 +34,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Nome</th>
+                                    <th>Bairro</th>
                                     <th>Ações</th>
                                 </tr>
                                 </thead>
@@ -42,13 +43,14 @@
                                     <tr>
                                         <td>{{ point.id }}</td>
                                         <td>{{ point.name }}</td>
+                                        <td>{{ point.neighborhood.name }}</td>
                                         <td>
                                             <a href="{{ path('go_admin_point_edit', {'id': point.id}) }}"
                                                 class="btn btn-info btn-flat" title="Editar">
                                                 <i class="fa fa-edit fa-lg"></i>
                                             </a>
 
-                                            <a href="{{ path('go_admin_point_delete', {'id': point.id}) }}"
+                                            <a onclick="return confirm('Tem certeza que deseja apagar o ponto {{point.name}}');" href="{{ path('go_admin_point_delete', {'id': point.id}) }}"
                                                 class="btn btn-danger btn-flat" title="Apagar">
                                                 <i class="fa fa-trash-o fa-lg"></i>
                                             </a>

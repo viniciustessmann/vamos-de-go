@@ -37,7 +37,7 @@ class ManyToManyAssociationBuilder extends OneToManyAssociationBuilder
     /**
      * @var array
      */
-    private $inverseJoinColumns = [];
+    private $inverseJoinColumns = array();
 
     /**
      * @param string $name
@@ -47,7 +47,6 @@ class ManyToManyAssociationBuilder extends OneToManyAssociationBuilder
     public function setJoinTable($name)
     {
         $this->joinTableName = $name;
-
         return $this;
     }
 
@@ -65,15 +64,14 @@ class ManyToManyAssociationBuilder extends OneToManyAssociationBuilder
      */
     public function addInverseJoinColumn($columnName, $referencedColumnName, $nullable = true, $unique = false, $onDelete = null, $columnDef = null)
     {
-        $this->inverseJoinColumns[] = [
+        $this->inverseJoinColumns[] = array(
             'name' => $columnName,
             'referencedColumnName' => $referencedColumnName,
             'nullable' => $nullable,
             'unique' => $unique,
             'onDelete' => $onDelete,
             'columnDefinition' => $columnDef,
-        ];
-
+        );
         return $this;
     }
 
@@ -83,7 +81,7 @@ class ManyToManyAssociationBuilder extends OneToManyAssociationBuilder
     public function build()
     {
         $mapping = $this->mapping;
-        $mapping['joinTable'] = [];
+        $mapping['joinTable'] = array();
         if ($this->joinColumns) {
             $mapping['joinTable']['joinColumns'] = $this->joinColumns;
         }
@@ -95,7 +93,6 @@ class ManyToManyAssociationBuilder extends OneToManyAssociationBuilder
         }
         $cm = $this->builder->getClassMetadata();
         $cm->mapManyToMany($mapping);
-
         return $this->builder;
     }
 }

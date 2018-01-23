@@ -203,6 +203,26 @@
 
                 <li class="treeview">
                     <a href="#">
+                        <i class="fa fa-tasks"></i><span>Administradores</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{{ path('go_admin_admin_index') }}">
+                                <i class="fa fa-circle-o"></i>Listar administradores
+                            </a>
+                        </li>
+                        <li><a href="{{ path('go_admin_admin_new') }}">
+                                <i class="fa fa-circle-o"></i>Cadastrar administrador
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
                         <i class="fa fa-tasks"></i><span>Motoristas</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>

@@ -76,7 +76,7 @@ class CachedPersisterContext
      *
      * @var array
      */
-    public $sqlTableAliases = [];
+    public $sqlTableAliases = array();
 
     /**
      * Whether this persistent context is considering limit operations applied to the selection queries

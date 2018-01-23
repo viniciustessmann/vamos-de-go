@@ -35,6 +35,23 @@ class Point
      */
     private $address;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="number", type="string")
+     */
+    private $number;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cep", type="string")
+     */
+    private $cep;
+
+
      /**
      * @var float
      *
@@ -48,6 +65,12 @@ class Point
      * @ORM\Column(name="lng", type="float")
      */
     private $lng;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Neighborhood", inversedBy="points")
+     * @ORM\JoinColumn(name="neighborhood_id", referencedColumnName="id")
+     */
+    private $neighborhood;
 
     /**
      * Get id.   
@@ -139,5 +162,35 @@ class Point
     public function setlng($lng)
     {
         $this->lng = $lng;
+    }
+
+    public function setNumber($number)
+    {
+        $this->number = $number;
+    }
+
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    public function setNeighborhood(Neighborhood $neighborhood)
+    {
+        $this->neighborhood = $neighborhood;
+    }
+
+    public function getNeighborhood()
+    {
+        return $this->neighborhood;
+    }
+
+    public function setCep($cep)
+    {
+        $this->cep = $cep;
+    }
+
+    public function getCep()
+    {
+        return $this->cep;
     }
 }

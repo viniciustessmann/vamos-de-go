@@ -36,7 +36,7 @@ class NewsletterType extends AbstractType
             ])
             ->add('phone', TextType::class, [
                 'label' => 'Telefone',
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control phone']
             ])
             ->add('save', SubmitType::class, [
                 'attr' => [

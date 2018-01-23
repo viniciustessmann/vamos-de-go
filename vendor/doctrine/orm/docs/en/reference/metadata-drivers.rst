@@ -35,7 +35,7 @@ an entity.
     .. code-block:: php
 
         <?php
-        $em->getConfiguration()->setMetadataCacheImpl(new ApcuCache());
+        $em->getConfiguration()->setMetadataCacheImpl(new ApcCache());
 
 
 If you want to use one of the included core metadata drivers you

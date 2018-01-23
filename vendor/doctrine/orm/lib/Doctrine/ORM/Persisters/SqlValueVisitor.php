@@ -34,25 +34,25 @@ class SqlValueVisitor extends ExpressionVisitor
     /**
      * @var array
      */
-    private $values = [];
+    private $values = array();
 
     /**
      * @var array
      */
-    private $types  = [];
+    private $types  = array();
 
     /**
      * Converts a comparison expression into the target query language output.
      *
      * @param \Doctrine\Common\Collections\Expr\Comparison $comparison
      *
-     * @return void
+     * @return mixed
      */
     public function walkComparison(Comparison $comparison)
     {
-        $value    = $this->getValueFromComparison($comparison);
-        $field    = $comparison->getField();
-        $operator = $comparison->getOperator();
+        $value          = $this->getValueFromComparison($comparison);
+        $field          = $comparison->getField();
+        $operator       = $comparison->getOperator();
 
         if (($operator === Comparison::EQ || $operator === Comparison::IS) && $value === null) {
             return;
@@ -61,7 +61,7 @@ class SqlValueVisitor extends ExpressionVisitor
         }
 
         $this->values[] = $value;
-        $this->types[]  = [$field, $value, $operator];
+        $this->types[]  = array($field, $value, $operator);
     }
 
     /**
@@ -69,7 +69,7 @@ class SqlValueVisitor extends ExpressionVisitor
      *
      * @param \Doctrine\Common\Collections\Expr\CompositeExpression $expr
      *
-     * @return void
+     * @return mixed
      */
     public function walkCompositeExpression(CompositeExpression $expr)
     {
@@ -97,7 +97,7 @@ class SqlValueVisitor extends ExpressionVisitor
      */
     public function getParamsAndTypes()
     {
-        return [$this->values, $this->types];
+        return array($this->values, $this->types);
     }
 
     /**
@@ -111,18 +111,8 @@ class SqlValueVisitor extends ExpressionVisitor
     {
         $value = $comparison->getValue()->getValue();
 
-        switch ($comparison->getOperator()) {
-            case Comparison::CONTAINS:
-                return "%{$value}%";
-
-            case Comparison::STARTS_WITH:
-                return "{$value}%";
-
-            case Comparison::ENDS_WITH:
-                return "%{$value}";
-
-            default:
-                return $value;
-        }
+        return $comparison->getOperator() == Comparison::CONTAINS
+            ? "%{$value}%"
+            : $value;
     }
 }

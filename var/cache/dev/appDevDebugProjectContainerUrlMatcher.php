@@ -232,6 +232,39 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
         }
 
         if (0 === strpos($pathinfo, '/admin')) {
+            // go_admin_admin_index
+            if ($pathinfo === '/admin/administradores') {
+                return array (  '_controller' => 'AdminBundle\\Controller\\AdminController::indexAction',  '_route' => 'go_admin_admin_index',);
+            }
+
+            // go_admin_admin_new
+            if ($pathinfo === '/admin/novo_administrador') {
+                return array (  '_controller' => 'AdminBundle\\Controller\\AdminController::newAction',  '_route' => 'go_admin_admin_new',);
+            }
+
+            // go_admin_admin_edit
+            if (0 === strpos($pathinfo, '/admin/editar_admin') && preg_match('#^/admin/editar_admin/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'go_admin_admin_edit')), array (  '_controller' => 'AdminBundle\\Controller\\AdminController::editAction',));
+            }
+
+            // go_admin_admin_delete
+            if (0 === strpos($pathinfo, '/admin/apagar_admin') && preg_match('#^/admin/apagar_admin/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'go_admin_admin_delete')), array (  '_controller' => 'AdminBundle\\Controller\\AdminController::deleteAction',));
+            }
+
+            if (0 === strpos($pathinfo, '/admin/de')) {
+                // go_admin_admin_detail
+                if (0 === strpos($pathinfo, '/admin/detalhes_admin') && preg_match('#^/admin/detalhes_admin/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'go_admin_admin_detail')), array (  '_controller' => 'AdminBundle\\Controller\\AdminController::detailAction',));
+                }
+
+                // go_admin_admin_set_way
+                if (0 === strpos($pathinfo, '/admin/definir_rota') && preg_match('#^/admin/definir_rota/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'go_admin_admin_set_way')), array (  '_controller' => 'AdminBundle\\Controller\\AdminController::setWayAction',));
+                }
+
+            }
+
             // admin_default_index
             if (rtrim($pathinfo, '/') === '/admin') {
                 if (substr($pathinfo, -1) !== '/') {
@@ -324,9 +357,17 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
                 return $this->mergeDefaults(array_replace($matches, array('_route' => 'go_admin_client_delete')), array (  '_controller' => 'AdminBundle\\Controller\\PassengerController::deleteAction',));
             }
 
-            // go_admin_client_set_way
-            if (0 === strpos($pathinfo, '/admin/definir_rota') && preg_match('#^/admin/definir_rota/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'go_admin_client_set_way')), array (  '_controller' => 'AdminBundle\\Controller\\PassengerController::setWayAction',));
+            if (0 === strpos($pathinfo, '/admin/de')) {
+                // go_admin_client_detail
+                if (0 === strpos($pathinfo, '/admin/detalhes_cliente') && preg_match('#^/admin/detalhes_cliente/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'go_admin_client_detail')), array (  '_controller' => 'AdminBundle\\Controller\\PassengerController::detailAction',));
+                }
+
+                // go_admin_client_set_way
+                if (0 === strpos($pathinfo, '/admin/definir_rota') && preg_match('#^/admin/definir_rota/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'go_admin_client_set_way')), array (  '_controller' => 'AdminBundle\\Controller\\PassengerController::setWayAction',));
+                }
+
             }
 
             // go_admin_point_index

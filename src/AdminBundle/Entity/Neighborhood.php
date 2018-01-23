@@ -35,10 +35,16 @@ class Neighborhood
      */
     private $address;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Point", mappedBy="neighborhood")
+     */
+    private $points;
+
 
     public function __construct()
     {
         $this->address = new ArrayCollection();
+        $this->points = new ArrayCollection();
     }
 
     /**
@@ -61,19 +67,11 @@ class Neighborhood
         return $this->name;
     }
 
-    /**
-     * Set name.
-     *
-     */
     public function setName($name)
     {
         $this->name = $name;
     }
 
-    /**
-     * Set address.
-     *
-     */
     public function setAddress($address)
     {
         $this->address[] = $address;
@@ -81,5 +79,14 @@ class Neighborhood
 
     public function getAddress() {
         return $this->address;
+    }
+
+    public function setPoint(Point $point)
+    {
+        $this->points[] = $point;
+    }
+
+    public function getPoint() {
+        return $this->points;
     }
 }

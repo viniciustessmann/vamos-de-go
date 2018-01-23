@@ -41,9 +41,7 @@ appropriate autoloaders.
             $classMetadata = $eventArgs->getClassMetadata();
 
             if (!$classMetadata->isInheritanceTypeSingleTable() || $classMetadata->getName() === $classMetadata->rootEntityName) {
-                $classMetadata->setPrimaryTable([
-                    'name' => $this->prefix . $classMetadata->getTableName()
-                ]);
+                $classMetadata->setTableName($this->prefix . $classMetadata->getTableName());
             }
 
             foreach ($classMetadata->getAssociationMappings() as $fieldName => $mapping) {

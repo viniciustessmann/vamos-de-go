@@ -20,6 +20,7 @@
 namespace Doctrine\ORM\Internal\Hydration;
 
 use PDO;
+use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query;
 
@@ -62,7 +63,7 @@ class SimpleObjectHydrator extends AbstractHydrator
      */
     protected function hydrateAllData()
     {
-        $result = [];
+        $result = array();
 
         while ($row = $this->_stmt->fetch(PDO::FETCH_ASSOC)) {
             $this->hydrateRowData($row, $result);
@@ -79,7 +80,7 @@ class SimpleObjectHydrator extends AbstractHydrator
     protected function hydrateRowData(array $sqlResult, array &$result)
     {
         $entityName = $this->class->name;
-        $data       = [];
+        $data       = array();
 
         // We need to find the correct entity class name if we have inheritance in resultset
         if ($this->class->inheritanceType !== ClassMetadata::INHERITANCE_TYPE_NONE) {

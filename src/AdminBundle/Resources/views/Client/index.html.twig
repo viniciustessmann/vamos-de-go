@@ -41,14 +41,19 @@
                                 {% for client in clients %}
                                     <tr>
                                         <td>{{ client.id }}</td>
-                                        <td>{{ client.name }}</td>
+                                        <td>{{ client.username }}</td>
                                         <td>
+                                            <a href="{{ path('go_admin_client_detail', {'id': client.id}) }}"
+                                                class="btn btn-info btn-flat" title="Detalhes">
+                                                <i class="fa fa-eye fa-lg"></i>
+                                            </a>
+
                                             <a href="{{ path('go_admin_client_edit', {'id': client.id}) }}"
                                                 class="btn btn-info btn-flat" title="Editar">
                                                 <i class="fa fa-edit fa-lg"></i>
                                             </a>
 
-                                            <a href="{{ path('go_admin_client_delete', {'id': client.id}) }}"
+                                            <a  onclick="return confirm('Tem certeza que deseja apagar o client {{client.name}}');" href="{{ path('go_admin_client_delete', {'id': client.id}) }}"
                                                 class="btn btn-danger btn-flat" title="Apagar">
                                                 <i class="fa fa-trash-o fa-lg"></i>
                                             </a>

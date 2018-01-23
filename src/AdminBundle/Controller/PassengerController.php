@@ -6,9 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AdminBundle\Entity\Passenger;
 use AdminBundle\Entity\Way;
+use AdminBundle\Entity\User;
 use AdminBundle\Form\PassengerType;
 use AdminBundle\Form\PassengerWayType;
 use AdminBundle\Services\PassengerService;
+use AdminBundle\Form\UserType;
+use AdminBundle\Form\UserWayType;
+use AdminBundle\Services\UserService;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -19,8 +23,8 @@ class PassengerController extends Controller
      */
     public function indexAction()
     {   
-        $passengerService = $this->get('passenger_service');
-        $clients = $passengerService->findAll();
+        $userService = $this->get('user_service');
+        $clients = $userService->findAllByRole('ROLE_USER');
 
         return $this->render('AdminBundle:Client:index.html.twig', [
             'clients' => $clients
@@ -32,21 +36,30 @@ class PassengerController extends Controller
      */
     public function newAction(Request $request)
     {   
-        $passenger = new Passenger();
+        $user = new User();
 
-        $form = $this->createForm(PassengerType::class, $passenger);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) { 
             try {
-                
-                $passengerService = $this->get('passenger_service');
-                $passengerService->save($passenger);
 
-                $this->addFlash('success', 'Passageiro criado com sucesso!');
+                $userManager = $this->get('fos_user.user_manager');
+                $userManager->createUser($user);
+
+                $user->setRoles(['ROLE_USER']);
+                $user->setPlainPassword($request->request->get('user')['password']);
+                $user->setEnabled(true);
+
+                $userService = $this->get('user_service');
+                $userService->save($user);
+
+              
+                $this->addFlash('success', 'Usuário criado com sucesso!');
                 return $this->redirectToRoute('go_admin_client_index');
 
             } catch (\Exception $e) {
+                var_dump($e->getMessage());die;
                 $this->addFlash('danger', 'Algo de errado aconteceu! Por favor, tente novamente.');
             }
         }
@@ -59,21 +72,30 @@ class PassengerController extends Controller
     /**
      * @Route("/editar_cliente/{id}", name="go_admin_client_edit")
      */
-    public function editAction(Request $request, Passenger $passenger)
+    public function editAction(Request $request, User $user)
     {   
-        $form = $this->createForm(PassengerType::class, $passenger);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) { 
             try {
-                
-                $passengerService = $this->get('passenger_service');
-                $passengerService->save($passenger);
 
-                $this->addFlash('success', 'Cliente alterado com sucesso!');
+                $userManager = $this->get('fos_user.user_manager');
+                $userManager->createUser($user);
+
+                $user->setRoles(['ROLE_USER']);
+                $user->setPlainPassword($request->request->get('user')['password']);
+                $user->setEnabled(true);
+
+                $userService = $this->get('user_service');
+                $userService->save($user);
+
+              
+                $this->addFlash('success', 'Usuário criado com sucesso!');
                 return $this->redirectToRoute('go_admin_client_index');
 
             } catch (\Exception $e) {
+                var_dump($e->getMessage());die;
                 $this->addFlash('danger', 'Algo de errado aconteceu! Por favor, tente novamente.');
             }
         }
@@ -86,20 +108,30 @@ class PassengerController extends Controller
     /**
      * @Route("/apagar_cliente/{id}", name="go_admin_client_delete")
      */
-    public function deleteAction(Request $request, Passenger $passenger)
+    public function deleteAction(Request $request, User $user)
     {   
-        $passengerService = $this->get('passenger_service');
-        $passengerService->delete($passenger);
+        $userService = $this->get('user_service');
+        $userService->delete($user);
 
         $this->addFlash('success', 'Cliente apagado com sucesso!');
-        return $this->redirectToRoute('go_admin_passenger_index');
+        return $this->redirectToRoute('go_admin_client_index');
         
+    }
+
+    /**
+     * @Route("/detalhes_cliente/{id}", name="go_admin_client_detail")
+     */
+    public function detailAction(User $user)
+    {   
+        return $this->render('AdminBundle:Client:detail.html.twig', [
+            'user' => $user
+        ]);
     }
 
     /**
      * @Route("/definir_rota/{id}", name="go_admin_client_set_way")
      */
-    public function setWayAction(Request $request, Passenger $passenger)
+    public function setWayAction(Request $request, user $passenger)
     {     
         $way = new Way();
         $form = $this->createForm(PassengerWayType::class, $way);

@@ -51,7 +51,7 @@ class ParserResult
      *
      * @var array
      */
-    private $_parameterMappings = [];
+    private $_parameterMappings = array();
 
     /**
      * Initializes a new instance of the <tt>ParserResult</tt> class.

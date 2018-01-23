@@ -54,7 +54,7 @@
                                                 <i class="fa fa-edit fa-lg"></i>
                                             </a>
 
-                                            <a href="{{ path('go_admin_newsletter_delete', {'id': newsletter.id}) }}"
+                                            <a onclick="return confirm('Tem certeza que deseja apagar o registro de {{newsletter.name}}');" href="{{ path('go_admin_newsletter_delete', {'id': newsletter.id}) }}"
                                                 class="btn btn-danger btn-flat" title="Apagar">
                                                 <i class="fa fa-trash-o fa-lg"></i>
                                             </a>
@@ -70,5 +70,6 @@
             </div>
         </div>
     </section>
+
 
 {% endblock %}

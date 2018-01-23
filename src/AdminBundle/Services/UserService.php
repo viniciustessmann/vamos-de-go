@@ -30,6 +30,8 @@ class UserService
             $user->setCreated($now);
         }
 
+        $user->setUsername($user->getName());
+
         $this->em->persist($user);
         $this->em->flush();
     }
@@ -54,5 +56,38 @@ class UserService
     public function findAll()
     {
         return $this->em->getRepository(User::class)->findAll();
+    }
+
+    /**
+     * Gets all Post data.
+     *
+     * @return array
+     */
+    public function findAllByRole($role)
+    {
+        // $query = $this->em->createQuery('SELECT u FROM AdminBundle:User u WHERE u.roles LIKE :role')->setParameter('role', ['ROLE_USER']);
+        $query = $this->em->createQuery('SELECT u FROM AdminBundle:User u');
+        $users = $query->getResult();
+       
+        $response = [];
+    
+
+        foreach ($users as $user) {
+
+            // echo '<pre>';
+            // var_dump($user->getRoles());   
+
+            if(!in_array($role, $user->getRoles())){
+
+            //    echo '<pre>';
+            //    var_dump($role); 
+            //    var_dump($user->getRoles());
+               continue;
+            }
+
+            $response[] = $user;
+        }
+        
+        return $response;
     }
 }

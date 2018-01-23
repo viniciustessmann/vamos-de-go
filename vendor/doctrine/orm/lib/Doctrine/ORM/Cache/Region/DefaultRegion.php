@@ -102,7 +102,7 @@ class DefaultRegion implements Region
      */
     public function getMultiple(CollectionCacheEntry $collection)
     {
-        $result = [];
+        $result = array();
 
         foreach ($collection->identifiers as $key) {
             $entryKey   = $this->getCacheEntryKey($key);

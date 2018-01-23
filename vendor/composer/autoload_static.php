@@ -65,7 +65,6 @@ class ComposerStaticInit8086f45e19d44fee0055c5c8abf198e8
         ),
         'D' => 
         array (
-            'Doctrine\\ORM\\' => 13,
             'Doctrine\\Instantiator\\' => 22,
             'Doctrine\\Common\\Inflector\\' => 26,
             'Doctrine\\Common\\Cache\\' => 22,
@@ -181,10 +180,6 @@ class ComposerStaticInit8086f45e19d44fee0055c5c8abf198e8
         array (
             0 => __DIR__ . '/..' . '/friendsofsymfony/user-bundle',
         ),
-        'Doctrine\\ORM\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/doctrine/orm/lib/Doctrine/ORM',
-        ),
         'Doctrine\\Instantiator\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
@@ -240,6 +235,10 @@ class ComposerStaticInit8086f45e19d44fee0055c5c8abf198e8
         ),
         'D' => 
         array (
+            'Doctrine\\ORM\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/orm/lib',
+            ),
             'Doctrine\\DBAL\\' => 
             array (
                 0 => __DIR__ . '/..' . '/doctrine/dbal/lib',

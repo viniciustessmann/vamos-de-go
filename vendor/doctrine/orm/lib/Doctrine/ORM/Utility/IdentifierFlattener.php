@@ -17,6 +17,7 @@
  * <http://www.doctrine-project.org>.
  */
 
+
 namespace Doctrine\ORM\Utility;
 
 use Doctrine\ORM\UnitOfWork;
@@ -68,7 +69,7 @@ final class IdentifierFlattener
      */
     public function flattenIdentifier(ClassMetadata $class, array $id)
     {
-        $flatId = [];
+        $flatId = array();
 
         foreach ($class->identifier as $field) {
             if (isset($class->associationMappings[$field]) && isset($id[$field]) && is_object($id[$field])) {
@@ -85,7 +86,7 @@ final class IdentifierFlattener
 
                 $flatId[$field] = implode(' ', $associatedId);
             } elseif (isset($class->associationMappings[$field])) {
-                $associatedId = [];
+                $associatedId = array();
 
                 foreach ($class->associationMappings[$field]['joinColumns'] as $joinColumn) {
                     $associatedId[] = $id[$joinColumn['name']];

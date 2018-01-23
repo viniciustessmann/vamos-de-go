@@ -48,8 +48,8 @@
                                                 <i class="fa fa-edit fa-lg"></i>
                                             </a>
 
-                                            <a href="{{ path('go_admin_neighborhood_delete', {'id': neighborhood.id}) }}"
-                                                class="btn btn-danger btn-flat" title="Apagar">
+                                            <a onclick="return confirm('Tem certeza que deseja apagar o bairro {{neighborhood.name}}');" href="{{ path('go_admin_neighborhood_delete', {'id': neighborhood.id}) }}"
+                                                class="btn btn-danger btn-flat confirm-delete" title="Apagar">
                                                 <i class="fa fa-trash-o fa-lg"></i>
                                             </a>
 
@@ -65,4 +65,13 @@
         </div>
     </section>
 
+    {# <script>
+        jQuery(document).ready(function(){
+           
+                jQuery('.confirm-delete').click(function() {
+                   alert('teste');
+                });
+            
+        });
+    </script> #}
 {% endblock %}

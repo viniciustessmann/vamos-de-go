@@ -5,8 +5,11 @@ namespace AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AdminBundle\Entity\Driver;
+use AdminBundle\Entity\User;
 use AdminBundle\Form\DriverType;
 use AdminBundle\Services\DriverService;
+use AdminBundle\Form\UserType;
+use AdminBundle\Services\UserService;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -17,8 +20,8 @@ class DriverController extends Controller
      */
     public function indexAction()
     {   
-        $driverService = $this->get('driver_service');
-        $drivers = $driverService->findAll();
+        $userService = $this->get('user_service');
+        $drivers = $userService->findAllByRole('ROLE_DRIVER');
 
         return $this->render('AdminBundle:Driver:index.html.twig', [
             'drivers' => $drivers
@@ -30,21 +33,30 @@ class DriverController extends Controller
      */
     public function newAction(Request $request)
     {   
-        $driver = new Driver();
+        $user = new User();
 
-        $form = $this->createForm(DriverType::class, $driver);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) { 
             try {
-                
-                $driverService = $this->get('driver_service');
-                $driverService->save($driver);
 
-                $this->addFlash('success', 'Motorista criado com sucesso!');
+                $userManager = $this->get('fos_user.user_manager');
+                $userManager->createUser($user);
+
+                $user->setRoles(['ROLE_DRIVER']);
+                $user->setPlainPassword($request->request->get('user')['password']);
+                $user->setEnabled(true);
+
+                $userService = $this->get('user_service');
+                $userService->save($user);
+
+              
+                $this->addFlash('success', 'Usuário criado com sucesso!');
                 return $this->redirectToRoute('go_admin_driver_index');
 
             } catch (\Exception $e) {
+                var_dump($e->getMessage());die;
                 $this->addFlash('danger', 'Algo de errado aconteceu! Por favor, tente novamente.');
             }
         }
@@ -57,21 +69,29 @@ class DriverController extends Controller
     /**
      * @Route("/editar_motorista/{id}", name="go_admin_driver_edit")
      */
-    public function editAction(Request $request, Driver $driver)
+    public function editAction(Request $request, User $user)
     {   
-        $form = $this->createForm(DriverType::class, $driver);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) { 
             try {
-                
-                $driverService = $this->get('driver_service');
-                $driverService->save($driver);
 
-                $this->addFlash('success', 'Motorista alterado com sucesso!');
+                $userManager = $this->get('fos_user.user_manager');
+                $userManager->createUser($user);
+
+                $user->setRoles(['ROLE_DRIVER']);
+                $user->setPlainPassword($request->request->get('user')['password']);
+                $user->setEnabled(true);
+
+                $userService = $this->get('user_service');
+                $userService->save($user);
+
+              
+                $this->addFlash('success', 'Usuário criado com sucesso!');
                 return $this->redirectToRoute('go_admin_driver_index');
 
             } catch (\Exception $e) {
+                var_dump($e->getMessage());die;
                 $this->addFlash('danger', 'Algo de errado aconteceu! Por favor, tente novamente.');
             }
         }
@@ -84,13 +104,13 @@ class DriverController extends Controller
     /**
      * @Route("/apagar_motorista/{id}", name="go_admin_driver_delete")
      */
-    public function deleteAction(Request $request, Driver $driver)
+    public function deleteAction(Request $request, User $user)
     {   
-        $driverService = $this->get('driver_service');
-        $driverService->delete($driver);
+        $userService = $this->get('user_service');
+        $userService->delete($user);
 
         $this->addFlash('success', 'Motorista apagado com sucesso!');
-        return $this->redirectToRoute('go_admin_driver_index');
+        return $this->redirectToRoute('go_admin_user_index');
         
     }
 }

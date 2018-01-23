@@ -28,12 +28,34 @@ class User extends BaseUser
     protected $id;
 
 
+      /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string")
+     */
+    private $name;
+
     /**
      * @var string
      *
      * @ORM\Column(name="phone", type="string", nullable=true)
      */
     private $phone;
+
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="created", type="datetime", nullable=true)
+     */
+    private $created;
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="cpf", type="string", nullable=true)
+     */
+    private $cpf;
 
      /**
      * @ORM\ManyToOne(targetEntity="Address", inversedBy="user")
@@ -52,6 +74,16 @@ class User extends BaseUser
         return $this->useremail;
     }
 
+    public function setName($name) 
+    {
+        return $this->name = $name;
+    }
+
+    public function setUsername($name) 
+    {
+        return $this->username = $name;
+    }
+
     public function getName(){
         return $this->name;
     }
@@ -62,7 +94,16 @@ class User extends BaseUser
 
     public function setPhone($phone)
     {
+        $this->phone = $phone;
+    }
 
+    public function getCpf(){
+        return $this->cpf;
+    }
+
+    public function setCpf($cpf)
+    {   
+        $this->cpf = $cpf;
     }
     
     /**
@@ -73,6 +114,11 @@ class User extends BaseUser
     public function setCreated($created)
     {
         $this->created = $created;
+    }
+
+    public function getCreated()
+    {
+        return $this->created;
     }
 
     public function getAddress()

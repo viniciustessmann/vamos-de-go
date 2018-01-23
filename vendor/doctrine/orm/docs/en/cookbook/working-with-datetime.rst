@@ -49,15 +49,14 @@ By default Doctrine assumes that you are working with a default timezone. Each D
 is created by Doctrine will be assigned the timezone that is currently the default, either through
 the ``date.timezone`` ini setting or by calling ``date_default_timezone_set()``.
 
-This is very important to handle correctly if your application runs on different servers or is moved from one to another server
+This is very important to handle correctly if your application runs on different serves or is moved from one to another server
 (with different timezone settings). You have to make sure that the timezone is the correct one
 on all this systems.
 
 Handling different Timezones with the DateTime Type
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you first come across the requirement to save different timezones you may be still optimistic about how
-to manage this mess,
+If you first come across the requirement to save different you are still optimistic to manage this mess,
 however let me crush your expectations fast. There is not a single database out there (supported by Doctrine 2)
 that supports timezones correctly. Correctly here means that you can cover all the use-cases that
 can come up with timezones. If you don't believe me you should read up on `Storing DateTime
@@ -86,63 +85,43 @@ the UTC time at the time of the booking and the timezone the event happened in.
 
     use Doctrine\DBAL\Platforms\AbstractPlatform;
     use Doctrine\DBAL\Types\ConversionException;
-    use Doctrine\DBAL\Types\DateTimeType;
 
     class UTCDateTimeType extends DateTimeType
     {
-        static private $utc;
+        static private $utc = null;
 
         public function convertToDatabaseValue($value, AbstractPlatform $platform)
         {
-            if ($value instanceof \DateTime) {
-                $value->setTimezone(self::getUtc());
+            if ($value === null) {
+                return null;
             }
 
-            return parent::convertToDatabaseValue($value, $platform);
+
+            return $value->format($platform->getDateTimeFormatString(),
+                (self::$utc) ? self::$utc : (self::$utc = new \DateTimeZone('UTC'))
+            );
         }
 
         public function convertToPHPValue($value, AbstractPlatform $platform)
         {
-            if (null === $value || $value instanceof \DateTime) {
-                return $value;
+            if ($value === null) {
+                return null;
             }
 
-            $converted = \DateTime::createFromFormat(
+            $val = \DateTime::createFromFormat(
                 $platform->getDateTimeFormatString(),
                 $value,
-                self::$utc ? self::$utc : self::$utc = new \DateTimeZone('UTC')
+                (self::$utc) ? self::$utc : (self::$utc = new \DateTimeZone('UTC'))
             );
-
-            if (! $converted) {
-                throw ConversionException::conversionFailedFormat(
-                    $value,
-                    $this->getName(),
-                    $platform->getDateTimeFormatString()
-                );
+            if (!$val) {
+                throw ConversionException::conversionFailed($value, $this->getName());
             }
-
-            return $converted;
+            return $val;
         }
     }
 
 This database type makes sure that every DateTime instance is always saved in UTC, relative
-to the current timezone that the passed DateTime instance has.
-
-To actually use this new type instead of the default ``datetime`` type, you need to run following
-code before bootstrapping the ORM:
-
-.. code-block:: php
-
-    <?php
-
-    use Doctrine\DBAL\Types\Type;
-    use DoctrineExtensions\DBAL\Types\UTCDateTimeType;
-
-    Type::overrideType('datetime', UTCDateTimeType::class);
-    Type::overrideType('datetimetz', UTCDateTimeType::class);
-
-
-To be able to transform these values
+to the current timezone that the passed DateTime instance has. To be able to transform these values
 back into their real timezone you have to save the timezone in a separate field of the entity
 requiring timezoned datetimes:
 

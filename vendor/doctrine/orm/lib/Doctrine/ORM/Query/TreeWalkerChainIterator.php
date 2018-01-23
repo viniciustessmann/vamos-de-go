@@ -20,14 +20,14 @@
 namespace Doctrine\ORM\Query;
 
 /**
- *
+ * 
  */
 class TreeWalkerChainIterator implements \Iterator, \ArrayAccess
 {
     /**
      * @var TreeWalker[]
      */
-    private $walkers = [];
+    private $walkers = array();
     /**
      * @var TreeWalkerChain
      */
@@ -51,7 +51,7 @@ class TreeWalkerChainIterator implements \Iterator, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function rewind()
+    function rewind()
     {
         return reset($this->walkers);
     }
@@ -59,7 +59,7 @@ class TreeWalkerChainIterator implements \Iterator, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function current()
+    function current()
     {
         return $this->offsetGet(key($this->walkers));
     }
@@ -67,7 +67,7 @@ class TreeWalkerChainIterator implements \Iterator, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function key()
+    function key()
     {
         return key($this->walkers);
     }
@@ -75,7 +75,7 @@ class TreeWalkerChainIterator implements \Iterator, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function next()
+    function next()
     {
         next($this->walkers);
 
@@ -85,10 +85,11 @@ class TreeWalkerChainIterator implements \Iterator, \ArrayAccess
     /**
      * {@inheritdoc}
      */
-    public function valid()
+    function valid()
     {
         return key($this->walkers) !== null;
     }
+
 
     /**
      * {@inheritdoc}
@@ -119,7 +120,7 @@ class TreeWalkerChainIterator implements \Iterator, \ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-        if (null === $offset) {
+        if (is_null($offset)) {
             $this->walkers[] = $value;
         } else {
             $this->walkers[$offset] = $value;

@@ -70,7 +70,7 @@ abstract class AbstractCollectionPersister implements CachedCollectionPersister
      /**
      * @var array
      */
-    protected $queuedCache = [];
+    protected $queuedCache = array();
 
     /**
      * @var \Doctrine\ORM\Cache\Region

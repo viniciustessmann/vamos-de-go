@@ -21,8 +21,6 @@ namespace Doctrine\ORM\Query;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
-use Doctrine\ORM\Mapping\MappingException;
-use Doctrine\ORM\Utility\PersisterHelper;
 
 /**
  * A ResultSetMappingBuilder uses the EntityManager to automatically populate entity fields.
@@ -97,7 +95,7 @@ class ResultSetMappingBuilder extends ResultSetMapping
      *
      * @return void
      */
-    public function addRootEntityFromClassMetadata($class, $alias, $renamedColumns = [], $renameMode = null)
+    public function addRootEntityFromClassMetadata($class, $alias, $renamedColumns = array(), $renameMode = null)
     {
         $renameMode     = $renameMode ?: $this->defaultRenameMode;
         $columnAliasMap = $this->getColumnAliasMap($class, $renameMode, $renamedColumns);
@@ -119,7 +117,7 @@ class ResultSetMappingBuilder extends ResultSetMapping
      *
      * @return void
      */
-    public function addJoinedEntityFromClassMetadata($class, $alias, $parentAlias, $relation, $renamedColumns = [], $renameMode = null)
+    public function addJoinedEntityFromClassMetadata($class, $alias, $parentAlias, $relation, $renamedColumns = array(), $renameMode = null)
     {
         $renameMode     = $renameMode ?: $this->defaultRenameMode;
         $columnAliasMap = $this->getColumnAliasMap($class, $renameMode, $renamedColumns);
@@ -139,7 +137,7 @@ class ResultSetMappingBuilder extends ResultSetMapping
      *
      * @throws \InvalidArgumentException
      */
-    protected function addAllClassFields($class, $alias, $columnAliasMap = [])
+    protected function addAllClassFields($class, $alias, $columnAliasMap = array())
     {
         $classMetadata = $this->em->getClassMetadata($class);
         $platform      = $this->em->getConnection()->getDatabasePlatform();
@@ -162,19 +160,20 @@ class ResultSetMappingBuilder extends ResultSetMapping
 
         foreach ($classMetadata->associationMappings as $associationMapping) {
             if ($associationMapping['isOwningSide'] && $associationMapping['type'] & ClassMetadataInfo::TO_ONE) {
-                $targetClass  = $this->em->getClassMetadata($associationMapping['targetEntity']);
-                $isIdentifier = isset($associationMapping['id']) && $associationMapping['id'] === true;
-
                 foreach ($associationMapping['joinColumns'] as $joinColumn) {
                     $columnName  = $joinColumn['name'];
                     $columnAlias = $platform->getSQLResultCasing($columnAliasMap[$columnName]);
-                    $columnType = PersisterHelper::getTypeOfColumn($joinColumn['referencedColumnName'], $targetClass, $this->em);
 
                     if (isset($this->metaMappings[$columnAlias])) {
                         throw new \InvalidArgumentException("The column '$columnAlias' conflicts with another column in the mapper.");
                     }
 
-                    $this->addMetaResult($alias, $columnAlias, $columnName, $isIdentifier, $columnType);
+                    $this->addMetaResult(
+                        $alias,
+                        $columnAlias,
+                        $columnName,
+                        (isset($associationMapping['id']) && $associationMapping['id'] === true)
+                    );
                 }
             }
         }
@@ -206,7 +205,8 @@ class ResultSetMappingBuilder extends ResultSetMapping
                 return $columnName . $this->sqlCounter++;
 
             case self::COLUMN_RENAMING_CUSTOM:
-                return $customRenameColumns[$columnName] ?? $columnName;
+                return isset($customRenameColumns[$columnName])
+                    ? $customRenameColumns[$columnName] : $columnName;
 
             case self::COLUMN_RENAMING_NONE:
                 return $columnName;
@@ -231,7 +231,7 @@ class ResultSetMappingBuilder extends ResultSetMapping
             $mode = self::COLUMN_RENAMING_CUSTOM;
         }
 
-        $columnAlias = [];
+        $columnAlias = array();
         $class       = $this->em->getClassMetadata($className);
 
         foreach ($class->getColumnNames() as $columnName) {
@@ -284,27 +284,21 @@ class ResultSetMappingBuilder extends ResultSetMapping
         $this->addEntityResult($class->name, $alias);
 
         if ($classMetadata->discriminatorColumn) {
-            $discrColumn = $classMetadata->discriminatorColumn;
-
-            $this->setDiscriminatorColumn($alias, $discrColumn['name']);
-            $this->addMetaResult($alias, $discrColumn['name'], $discrColumn['fieldName'], false, $discrColumn['type']);
+            $discriminatorColumn = $classMetadata->discriminatorColumn;
+            $this->setDiscriminatorColumn($alias, $discriminatorColumn['name']);
+            $this->addMetaResult($alias, $discriminatorColumn['name'], $discriminatorColumn['fieldName']);
         }
 
         foreach ($classMetadata->getColumnNames() as $key => $columnName) {
-            $propertyName = $classMetadata->getFieldName($columnName);
-
+            $propertyName   = $classMetadata->getFieldName($columnName);
             $this->addFieldResult($alias, $columnName, $propertyName);
         }
 
         foreach ($classMetadata->associationMappings as $associationMapping) {
             if ($associationMapping['isOwningSide'] && $associationMapping['type'] & ClassMetadataInfo::TO_ONE) {
-                $targetClass = $this->em->getClassMetadata($associationMapping['targetEntity']);
-
                 foreach ($associationMapping['joinColumns'] as $joinColumn) {
-                    $columnName  = $joinColumn['name'];
-                    $columnType  = PersisterHelper::getTypeOfColumn($joinColumn['referencedColumnName'], $targetClass, $this->em);
-
-                    $this->addMetaResult($alias, $columnName, $columnName, $classMetadata->isIdentifier($columnName), $columnType);
+                    $columnName = $joinColumn['name'];
+                    $this->addMetaResult($alias, $columnName, $columnName, $classMetadata->isIdentifier($columnName));
                 }
             }
         }
@@ -324,8 +318,8 @@ class ResultSetMappingBuilder extends ResultSetMapping
     {
         $counter        = 0;
         $resultMapping  = $class->getSqlResultSetMapping($resultSetMappingName);
-        $rootShortName  = $class->reflClass->getShortName();
-        $rootAlias      = strtolower($rootShortName[0]) . $counter;
+        $rooShortName   = $class->reflClass->getShortName();
+        $rootAlias      = strtolower($rooShortName[0]) . $counter;
 
 
         if (isset($resultMapping['entities'])) {
@@ -340,10 +334,9 @@ class ResultSetMappingBuilder extends ResultSetMapping
                     $joinAlias      = strtolower($shortName[0]) . ++ $counter;
                     $associations   = $class->getAssociationsByTargetClass($classMetadata->name);
 
-                    $this->addNamedNativeQueryEntityResultMapping($classMetadata, $entityMapping, $joinAlias);
-
                     foreach ($associations as $relation => $mapping) {
                         $this->addJoinedEntityResult($mapping['targetEntity'], $joinAlias, $rootAlias, $relation);
+                        $this->addNamedNativeQueryEntityResultMapping($classMetadata, $entityMapping, $joinAlias);
                     }
                 }
 
@@ -352,11 +345,7 @@ class ResultSetMappingBuilder extends ResultSetMapping
 
         if (isset($resultMapping['columns'])) {
             foreach ($resultMapping['columns'] as $entityMapping) {
-                $type = isset($class->fieldNames[$entityMapping['name']])
-                    ? PersisterHelper::getTypeOfColumn($entityMapping['name'], $class, $this->em)
-                    : 'string';
-
-                $this->addScalarResult($entityMapping['name'], $entityMapping['name'], $type);
+                $this->addScalarResult($entityMapping['name'], $entityMapping['name']);
             }
         }
 
@@ -365,24 +354,21 @@ class ResultSetMappingBuilder extends ResultSetMapping
 
     /**
      * Adds the entity result mapping of the results of native SQL queries to the result set.
-     *
+     * 
      * @param ClassMetadataInfo $classMetadata
      * @param array             $entityMapping
      * @param string            $alias
      *
      * @return ResultSetMappingBuilder
      *
-     * @throws MappingException
      * @throws \InvalidArgumentException
      */
     public function addNamedNativeQueryEntityResultMapping(ClassMetadataInfo $classMetadata, array $entityMapping, $alias)
     {
         if (isset($entityMapping['discriminatorColumn']) && $entityMapping['discriminatorColumn']) {
             $discriminatorColumn = $entityMapping['discriminatorColumn'];
-            $discriminatorType   = $classMetadata->discriminatorColumn['type'];
-
             $this->setDiscriminatorColumn($alias, $discriminatorColumn);
-            $this->addMetaResult($alias, $discriminatorColumn, $discriminatorColumn, false, $discriminatorType);
+            $this->addMetaResult($alias, $discriminatorColumn, $discriminatorColumn);
         }
 
         if (isset($entityMapping['fields']) && !empty($entityMapping['fields'])) {
@@ -390,34 +376,32 @@ class ResultSetMappingBuilder extends ResultSetMapping
                 $fieldName = $field['name'];
                 $relation  = null;
 
-                if (strpos($fieldName, '.') !== false) {
+                if(strpos($fieldName, '.')){
                     list($relation, $fieldName) = explode('.', $fieldName);
                 }
 
                 if (isset($classMetadata->associationMappings[$relation])) {
-                    if ($relation) {
+                    if($relation) {
                         $associationMapping = $classMetadata->associationMappings[$relation];
                         $joinAlias          = $alias.$relation;
                         $parentAlias        = $alias;
 
                         $this->addJoinedEntityResult($associationMapping['targetEntity'], $joinAlias, $parentAlias, $relation);
                         $this->addFieldResult($joinAlias, $field['column'], $fieldName);
-                    } else {
+                    }else {
                         $this->addFieldResult($alias, $field['column'], $fieldName, $classMetadata->name);
                     }
                 } else {
-                    if ( ! isset($classMetadata->fieldMappings[$fieldName])) {
+                    if(!isset($classMetadata->fieldMappings[$fieldName])) {
                         throw new \InvalidArgumentException("Entity '".$classMetadata->name."' has no field '".$fieldName."'. ");
                     }
-
                     $this->addFieldResult($alias, $field['column'], $fieldName, $classMetadata->name);
                 }
             }
 
         } else {
             foreach ($classMetadata->getColumnNames() as $columnName) {
-                $propertyName = $classMetadata->getFieldName($columnName);
-
+                $propertyName   = $classMetadata->getFieldName($columnName);
                 $this->addFieldResult($alias, $columnName, $propertyName);
             }
         }
@@ -435,12 +419,13 @@ class ResultSetMappingBuilder extends ResultSetMapping
      *
      * @return string
      */
-    public function generateSelectClause($tableAliases = [])
+    public function generateSelectClause($tableAliases = array())
     {
         $sql = "";
 
         foreach ($this->columnOwnerMap as $columnName => $dqlAlias) {
-            $tableAlias = $tableAliases[$dqlAlias] ?? $dqlAlias;
+            $tableAlias = isset($tableAliases[$dqlAlias])
+                ? $tableAliases[$dqlAlias] : $dqlAlias;
 
             if ($sql) {
                 $sql .= ", ";
@@ -468,6 +453,6 @@ class ResultSetMappingBuilder extends ResultSetMapping
      */
     public function __toString()
     {
-        return $this->generateSelectClause([]);
+        return $this->generateSelectClause(array());
     }
 }

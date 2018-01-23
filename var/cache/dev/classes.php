@@ -2555,20 +2555,6 @@ throw $e;
 }
 namespace Doctrine\Common\Cache
 {
-interface MultiGetCache
-{
-function fetchMultiple(array $keys);
-}
-}
-namespace Doctrine\Common\Cache
-{
-interface MultiDeleteCache
-{
-function deleteMultiple(array $keys);
-}
-}
-namespace Doctrine\Common\Cache
-{
 interface MultiPutCache
 {
 function saveMultiple(array $keysAndValues, $lifetime = 0);
@@ -2576,8 +2562,9 @@ function saveMultiple(array $keysAndValues, $lifetime = 0);
 }
 namespace Doctrine\Common\Cache
 {
-interface MultiOperationCache extends MultiGetCache, MultiDeleteCache, MultiPutCache
+interface MultiGetCache
 {
+function fetchMultiple(array $keys);
 }
 }
 namespace Doctrine\Common\Cache
@@ -2613,7 +2600,7 @@ public function getStats();
 }
 namespace Doctrine\Common\Cache
 {
-abstract class CacheProvider implements Cache, FlushableCache, ClearableCache, MultiOperationCache
+abstract class CacheProvider implements Cache, FlushableCache, ClearableCache, MultiGetCache, MultiPutCache
 {
 const DOCTRINE_NAMESPACE_CACHEKEY ='DoctrineNamespaceCacheKey[%s]';
 private $namespace ='';
@@ -2634,11 +2621,11 @@ return $this->doFetch($this->getNamespacedId($id));
 public function fetchMultiple(array $keys)
 {
 if (empty($keys)) {
-return [];
+return array();
 }
-$namespacedKeys = array_combine($keys, array_map([$this,'getNamespacedId'], $keys));
+$namespacedKeys = array_combine($keys, array_map(array($this,'getNamespacedId'), $keys));
 $items = $this->doFetchMultiple($namespacedKeys);
-$foundItems = [];
+$foundItems = array();
 foreach ($namespacedKeys as $requestedKey => $namespacedKey) {
 if (isset($items[$namespacedKey]) || array_key_exists($namespacedKey, $items)) {
 $foundItems[$requestedKey] = $items[$namespacedKey];
@@ -2648,7 +2635,7 @@ return $foundItems;
 }
 public function saveMultiple(array $keysAndValues, $lifetime = 0)
 {
-$namespacedKeysAndValues = [];
+$namespacedKeysAndValues = array();
 foreach ($keysAndValues as $key => $value) {
 $namespacedKeysAndValues[$this->getNamespacedId($key)] = $value;
 }
@@ -2661,10 +2648,6 @@ return $this->doContains($this->getNamespacedId($id));
 public function save($id, $data, $lifeTime = 0)
 {
 return $this->doSave($this->getNamespacedId($id), $data, $lifeTime);
-}
-public function deleteMultiple(array $keys)
-{
-return $this->doDeleteMultiple(array_map(array($this,'getNamespacedId'), $keys));
 }
 public function delete($id)
 {
@@ -2688,27 +2671,27 @@ return true;
 }
 return false;
 }
-private function getNamespacedId(string $id) : string
+private function getNamespacedId($id)
 {
 $namespaceVersion = $this->getNamespaceVersion();
 return sprintf('%s[%s][%s]', $this->namespace, $id, $namespaceVersion);
 }
-private function getNamespaceCacheKey() : string
+private function getNamespaceCacheKey()
 {
 return sprintf(self::DOCTRINE_NAMESPACE_CACHEKEY, $this->namespace);
 }
-private function getNamespaceVersion() : int
+private function getNamespaceVersion()
 {
 if (null !== $this->namespaceVersion) {
 return $this->namespaceVersion;
 }
 $namespaceCacheKey = $this->getNamespaceCacheKey();
-$this->namespaceVersion = (int) $this->doFetch($namespaceCacheKey) ?: 1;
+$this->namespaceVersion = $this->doFetch($namespaceCacheKey) ?: 1;
 return $this->namespaceVersion;
 }
 protected function doFetchMultiple(array $keys)
 {
-$returnValues = [];
+$returnValues = array();
 foreach ($keys as $key) {
 if (false !== ($item = $this->doFetch($key)) || $this->doContains($key)) {
 $returnValues[$key] = $item;
@@ -2729,16 +2712,6 @@ $success = false;
 return $success;
 }
 abstract protected function doSave($id, $data, $lifeTime = 0);
-protected function doDeleteMultiple(array $keys)
-{
-$success = true;
-foreach ($keys as $key) {
-if (! $this->doDelete($key)) {
-$success = false;
-}
-}
-return $success;
-}
 abstract protected function doDelete($id);
 abstract protected function doFlush();
 abstract protected function doGetStats();

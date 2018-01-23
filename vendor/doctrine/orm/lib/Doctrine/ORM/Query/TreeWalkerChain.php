@@ -72,7 +72,7 @@ class TreeWalkerChain implements TreeWalker
      */
     public function setQueryComponent($dqlAlias, array $queryComponent)
     {
-        $requiredKeys = ['metadata', 'parent', 'relation', 'map', 'nestingLevel', 'token'];
+        $requiredKeys = array('metadata', 'parent', 'relation', 'map', 'nestingLevel', 'token');
 
         if (array_diff($requiredKeys, array_keys($queryComponent))) {
             throw QueryException::invalidQueryComponent($dqlAlias);
@@ -429,7 +429,7 @@ class TreeWalkerChain implements TreeWalker
     /**
      * {@inheritdoc}
      */
-    public function walkInstanceOfExpression($instanceOfExpr)
+    function walkInstanceOfExpression($instanceOfExpr)
     {
         foreach ($this->_walkers as $walker) {
             $walker->walkInstanceOfExpression($instanceOfExpr);

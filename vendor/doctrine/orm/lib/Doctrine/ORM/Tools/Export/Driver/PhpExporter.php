@@ -40,7 +40,7 @@ class PhpExporter extends AbstractExporter
      */
     public function exportClassMetadata(ClassMetadataInfo $metadata)
     {
-        $lines = [];
+        $lines = array();
         $lines[] = '<?php';
         $lines[] = null;
         $lines[] = 'use Doctrine\ORM\Mapping\ClassMetadataInfo;';
@@ -82,8 +82,6 @@ class PhpExporter extends AbstractExporter
             }
         }
 
-        $lines = array_merge($lines, $this->processEntityListeners($metadata));
-
         foreach ($metadata->fieldMappings as $fieldMapping) {
             $lines[] = '$metadata->mapField(' . $this->_varExport($fieldMapping) . ');';
         }
@@ -93,7 +91,7 @@ class PhpExporter extends AbstractExporter
         }
 
         foreach ($metadata->associationMappings as $associationMapping) {
-            $cascade = ['remove', 'persist', 'refresh', 'merge', 'detach'];
+            $cascade = array('remove', 'persist', 'refresh', 'merge', 'detach');
             foreach ($cascade as $key => $value) {
                 if ( ! $associationMapping['isCascade'.ucfirst($value)]) {
                     unset($cascade[$key]);
@@ -101,15 +99,14 @@ class PhpExporter extends AbstractExporter
             }
 
             if (count($cascade) === 5) {
-                $cascade = ['all'];
+                $cascade = array('all');
             }
 
-            $method = null;
-            $associationMappingArray = [
+            $associationMappingArray = array(
                 'fieldName'    => $associationMapping['fieldName'],
                 'targetEntity' => $associationMapping['targetEntity'],
                 'cascade'     => $cascade,
-            ];
+            );
 
             if (isset($associationMapping['fetch'])) {
                 $associationMappingArray['fetch'] = $associationMapping['fetch'];
@@ -117,22 +114,21 @@ class PhpExporter extends AbstractExporter
 
             if ($associationMapping['type'] & ClassMetadataInfo::TO_ONE) {
                 $method = 'mapOneToOne';
-                $oneToOneMappingArray = [
+                $oneToOneMappingArray = array(
                     'mappedBy'      => $associationMapping['mappedBy'],
                     'inversedBy'    => $associationMapping['inversedBy'],
                     'joinColumns'   => $associationMapping['isOwningSide'] ? $associationMapping['joinColumns'] : [],
                     'orphanRemoval' => $associationMapping['orphanRemoval'],
-                ];
+                );
 
                 $associationMappingArray = array_merge($associationMappingArray, $oneToOneMappingArray);
             } elseif ($associationMapping['type'] == ClassMetadataInfo::ONE_TO_MANY) {
                 $method = 'mapOneToMany';
-                $potentialAssociationMappingIndexes = [
+                $potentialAssociationMappingIndexes = array(
                     'mappedBy',
                     'orphanRemoval',
                     'orderBy',
-                ];
-                $oneToManyMappingArray = [];
+                );
                 foreach ($potentialAssociationMappingIndexes as $index) {
                     if (isset($associationMapping[$index])) {
                         $oneToManyMappingArray[$index] = $associationMapping[$index];
@@ -141,12 +137,11 @@ class PhpExporter extends AbstractExporter
                 $associationMappingArray = array_merge($associationMappingArray, $oneToManyMappingArray);
             } elseif ($associationMapping['type'] == ClassMetadataInfo::MANY_TO_MANY) {
                 $method = 'mapManyToMany';
-                $potentialAssociationMappingIndexes = [
+                $potentialAssociationMappingIndexes = array(
                     'mappedBy',
                     'joinTable',
                     'orderBy',
-                ];
-                $manyToManyMappingArray = [];
+                );
                 foreach ($potentialAssociationMappingIndexes as $index) {
                     if (isset($associationMapping[$index])) {
                         $manyToManyMappingArray[$index] = $associationMapping[$index];
@@ -178,23 +173,5 @@ class PhpExporter extends AbstractExporter
         $export = str_replace('  ', ' ', $export);
 
         return $export;
-    }
-
-    private function processEntityListeners(ClassMetadataInfo $metadata) : array
-    {
-        $lines = [];
-
-        foreach ($metadata->entityListeners as $event => $entityListenerConfig) {
-            foreach ($entityListenerConfig as $entityListener) {
-                $lines[] = \sprintf(
-                    '$metadata->addEntityListener(%s, %s, %s);',
-                    \var_export($event, true),
-                    \var_export($entityListener['class'], true),
-                    \var_export($entityListener['method'], true)
-                );
-            }
-        }
-
-        return $lines;
     }
 }
