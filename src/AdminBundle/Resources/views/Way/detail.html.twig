@@ -33,13 +33,13 @@
 
                         <strong><i class="fa fa-book margin-r-5"></i> Saida</strong>
                         <p class="text-muted">
-                            {{ way.start|date('h:m:s') }} 
+                            {{ way.start|date('H:i:s') }} 
                         </p>
                         <hr>
 
                         <strong><i class="fa fa-book margin-r-5"></i> Chegada</strong>
                         <p class="text-muted">
-                             {{ way.end|date('h:m:s') }} 
+                             {{ way.end|date('H:i:s') }} 
                         </p>
                         <hr>
                         
@@ -47,36 +47,39 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <table role="grid" class="table table-bordered table-striped dataTable" id="dtable">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Endereço</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for point in way.points %}
-                    <tr>
-                        <td>{{ point.id }}</td>
-                        <td>{{ point.name }}</td>
-                        <td>{{ point.address }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+
+    {%  if way.points %}
         <div class="row">
+            <div class="col-sm-12">
+                <table role="grid" class="table table-bordered table-striped dataTable" id="dtable">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Endereço</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for point in way.points %}
+                        <tr>
+                            <td>{{ point.id }}</td>
+                            <td>{{ point.name }}</td>
+                            <td>{{ point.address }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+    {# <div class="row">
         <div class="col-sm-12">
             <table role="grid" class="table table-bordered table-striped dataTable" id="dtable">
                 <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
-                    {# <th>Endereço</th> #}
+                    {# <th>Endereço</th> 
                 </tr>
                 </thead>
                 <tbody>
@@ -84,13 +87,13 @@
                     <tr>
                         <td>{{ point.id }}</td>
                         <td>{{ point.name }}</td>
-                        {# <td>{{ point.address }}</td> #}
+                        {# <td>{{ point.address }}</td> 
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> #}
 
 
 

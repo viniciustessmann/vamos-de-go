@@ -15,8 +15,10 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use AdminBundle\Entity\Point;
 use AdminBundle\Entity\Driver;
+use AdminBundle\Entity\User;
 use AdminBundle\Repository\PointRepository;
 use AdminBundle\Repository\DriverRepository;
+use AdminBundle\Repository\UserRepository;
 
 class WayType extends AbstractType
 {
@@ -56,15 +58,15 @@ class WayType extends AbstractType
                     return $repo->createAlphabeticalQueryBuilder();
                 }
             ])
-            ->add('drivers', EntityType::class, [
-                'class' => Driver::class,
-                'choice_label' => 'name',
-                'attr' => ['class' => 'form-control'],
-                'multiple' => true,
-                'query_builder' => function(DriverRepository $repo) {
-                    return $repo->createAlphabeticalQueryBuilder();
-                }
-            ])
+            // ->add('drivers', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => 'name',
+            //     'attr' => ['class' => 'form-control'],
+            //     'multiple' => true,
+            //     'query_builder' => function(UserRepository $repo) {
+            //         return $repo->createAlphabeticalQueryBuilderDrivers();
+            //     }
+            // ])
             ->add('save', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary',

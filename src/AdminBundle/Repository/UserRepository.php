@@ -10,4 +10,9 @@ namespace AdminBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function createAlphabeticalQueryBuilderDrivers()
+    {
+        return $this->createQueryBuilder('fos_user')
+            ->orderBy('fos_user.name', 'ASC');
+    }
 }

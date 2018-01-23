@@ -75,20 +75,20 @@ class Way
      */
     protected $drivers;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="AdminBundle\Entity\Passenger")
-     * @ORM\JoinTable(
-     *      joinColumns={@ORM\JoinColumn(onDelete="CASCADE")},
-     *      inverseJoinColumns={@ORM\JoinColumn(onDelete="CASCADE")}
-     * )
-     */
-    protected $passengers;
+    // /**
+    //  * @ORM\ManyToMany(targetEntity="AdminBundle\Entity\Passenger")
+    //  * @ORM\JoinTable(
+    //  *      joinColumns={@ORM\JoinColumn(onDelete="CASCADE")},
+    //  *      inverseJoinColumns={@ORM\JoinColumn(onDelete="CASCADE")}
+    //  * )
+    //  */
+    // protected $passengers;
 
     public function __construct()
     {
         $this->points = new ArrayCollection();
-        $this->drivers = new ArrayCollection();
-        $this->passengers = new ArrayCollection();
+        // $this->drivers = new ArrayCollection();
+        // $this->passengers = new ArrayCollection();
     }
 
     /**
@@ -209,23 +209,23 @@ class Way
         $this->points[] = $point;
     }
 
-    public function getDrivers()
-    {
-        return $this->drivers;
-    }
+    // public function getDrivers()
+    // {
+    //     return $this->drivers;
+    // }
 
-    public function setDrivers($driver)
-    {
-        $this->drivers[] = $driver;
-    }
+    // public function setDrivers($driver)
+    // {
+    //     $this->drivers[] = $driver;
+    // }
 
-    public function getPassengers()
-    {
-        return $this->passengers;
-    }
+    // public function getPassengers()
+    // {
+    //     return $this->passengers;
+    // }
 
-    public function setPassengers($passenger)
-    {
-        $this->passengers[] = $passenger;
-    }
+    // public function setPassengers($passenger)
+    // {
+    //     $this->passengers[] = $passenger;
+    // }
 }
