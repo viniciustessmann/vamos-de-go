@@ -202,6 +202,24 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
 
         }
 
+        // driver_default_index
+        if (rtrim($pathinfo, '/') === '/motorista') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'driver_default_index');
+            }
+
+            return array (  '_controller' => 'DriverBundle\\Controller\\DefaultController::indexAction',  '_route' => 'driver_default_index',);
+        }
+
+        // client_default_index
+        if (rtrim($pathinfo, '/') === '/cliente') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'client_default_index');
+            }
+
+            return array (  '_controller' => 'ClientBundle\\Controller\\DefaultController::indexAction',  '_route' => 'client_default_index',);
+        }
+
         // home
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {

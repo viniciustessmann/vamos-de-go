@@ -1,3 +1,13 @@
+driver:
+    resource: "@DriverBundle/Controller/"
+    type:     annotation
+    prefix:   /motorista
+
+client:
+    resource: "@ClientBundle/Controller/"
+    type:     annotation
+    prefix:   /cliente
+
 site:
     resource: "@SiteBundle/Controller/"
     type:     annotation
