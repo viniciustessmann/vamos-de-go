@@ -56,27 +56,27 @@
         }
     </style>
 
-    <link rel="stylesheet" href="{{ asset('bundles/css/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/site/css/style.css') }}" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Cabin%3A400%2C600%7COpen+Sans%3A400%2C300%2C600&#038;ver=4.8.5" />
-    <link rel="stylesheet" href="{{ asset('bundles/css/font-awesome.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('bundles/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('bundles/css/clarina/style.css') }}" />
-    <link rel="stylesheet" href="{{ asset('bundles/css/llorix-one-lite/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/site/css/font-awesome.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/site/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/site/css/clarina/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/site/css/llorix-one-lite/style.css') }}" />
 
     <style id='llorix-one-lite-style-inline-css' type='text/css'>
-        .header{ background-image: url({{ asset('bundles/img/cropped-site.png') }});}.overlay-layer-wrap{ background:rgba(13,60,85,0);}.archive-top .section-overlay-layer{ background:rgba(13,60,85,0.0);}
+        .header{ background-image: url({{ asset('bundles/site/img/cropped-site.png') }});}.overlay-layer-wrap{ background:rgba(13,60,85,0);}.archive-top .section-overlay-layer{ background:rgba(13,60,85,0.0);}
     </style>
 
-    <link rel="stylesheet" href="{{ asset('bundles/css/llorix-one-lite/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/site/css/llorix-one-lite/style.css') }}" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web%3A400%2C400i%2C600%2C700%7CAssistant%3A700%2C400%2C800&#038;subset=latin%2Clatin-ext" />
-    <link rel="stylesheet" href="{{ asset('bundles/css/llorix-one-lite/style.css') }}" />
-    <link rel="stylesheet" href="{{ asset('bundles/css/clarina/style2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/site/css/llorix-one-lite/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/site/css/clarina/style2.css') }}" />
 
     <style id='clarina-inline-style-inline-css' type='text/css'>
         .single-service h3 { color: #1e3046!important; }.home-add-to-cart-wrap a { background-color: #28b7b1!important; }
     </style>
-    <script type='text/javascript' src='{{ asset('bundles/js/jquery.js') }}'></script>
-    <script type='text/javascript' src='{{ asset('bundles/js/jquery-migrate.js') }}'></script>
+    <script type='text/javascript' src='{{ asset('bundles/site/js/jquery.js') }}'></script>
+    <script type='text/javascript' src='{{ asset('bundles/site/js/jquery-migrate.js') }}'></script>
 
     <script type="text/javascript"> 
     (function(d,s,id){var z=d.createElement(s);z.type="text/javascript";z.id=id;z.async=true;z.src="//static.zotabox.com/b/0/b092ad79e6dfb91c448a79b10d65f1ab/widgets.js";var sz=d.getElementsByTagName(s)[0];sz.parentNode.insertBefore(z,sz)}(document,"script","zb-embed-code"));
@@ -179,7 +179,7 @@
                     <div class="only-logo">
                         <div id="only-logo-inner" class="navbar">
                             <div id="llorix_one_lite_only_logo" class="navbar-header">
-                                <img src="{{ asset('bundles/img/agoravai.png') }}"   alt="">
+                                <img src="{{ asset('bundles/site/img/agoravai.png') }}"   alt="">
                             </div>
                         </div>
                     </div>
@@ -191,7 +191,7 @@
                                         <p> Como tem que ser.</p>
                                     </h5>
 
-                                    <a href="#post-77" class="btn btn-primary standard-button  btn-new-client" style="color: white">
+                                    <a data-toggle="modal" data-target="#exampleModal" href="#post-77" class="btn btn-primary standard-button  btn-new-client" style="color: white">
                                         <span class="screen-reader-text"></span>QUERO ME CADASTRAR
                                     </a>
                                     
@@ -230,6 +230,58 @@
 	</div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        
+            <div class="container">
+                <header class="entry-header">
+                    <h1 class="entry-title single-title">Cadastro</h1>			
+                    <div class="colored-line-left">
+                    </div>
+                    <div class="clearfix">
+                    </div>
+                </header>
+
+                <div class="entry-content content-page llorix_one_lite_contact_form">
+                    <div class="col-md-6" style="width:45%;">
+                        <p>Por estarmos buscando atender você e também por acreditar que você mereça um transporte de qualidade, a partir de 2018 estaremos liberando a pré-venda para outras cidades, como o Rio Grande e Cassino.</p>
+                        <div class="pirate_forms_wrap">
+                            <form method="post" enctype="application/x-www-form-urlencoded" class="pirate_forms  form_honeypot-on pirate_forms_from_widget-on wordpress-nonce-on pirate-forms-contact-name-on pirate-forms-contact-email-on pirate-forms-contact-subject-on pirate-forms-contact-message-on pirate-forms-contact-submit-on pirate-forms-contact-referrer-on">
+                                <div class="pirate-forms-fields-container">
+                                    <div class="pirate_forms_three_inputs_wrap">
+                                        <div class="col-xs-12 col-sm-6 contact_name_wrap pirate_forms_three_inputs form_field_wrap">
+                                            <input type="text" id="pirate-forms-contact-name" name="pirate-forms-contact-name" class="form-control" placeholder="Seu nome"  value="">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 contact_email_wrap pirate_forms_three_inputs form_field_wrap">
+                                            <input type="text" id="pirate-forms-contact-email" name="pirate-forms-contact-email" class="form-control" placeholder="Seu telefone"  value="">
+                                        </div>
+                                        </br></br>
+                                        <div class="col-xs-12 contact_subject_wrap pirate_forms_three_inputs form_field_wrap">
+                                            <input type="email" id="pirate-forms-contact-subject" name="pirate-forms-contact-subject" class="form-control" placeholder="Seu e-mail"  value="">
+                                        </div>
+                                        </br></br>
+                                    </div>
+                                   
+                                </div>
+                            </form>	
+                            <div class="pirate_forms_clearfix">
+                            </div>
+                    </div>
+                </div>
+                <footer class="entry-footer">
+                </footer><!-- .fentry-footer -->
+            </div><!-- .entry-content -->
+        </div>
+        <div class="modal-footer" style="border-top: 1px solid #FFF;">
+            <button type="button" class="btn btn-primary">Salvar Cadastro</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <footer itemscope itemtype="http://schema.org/WPFooter" id="footer" role="contentinfo" class = "footer grey-bg">
 	<div class="container">
 		<div class="footer-widget-wrap">		
@@ -261,18 +313,18 @@
 	</div>
 </footer>
 
-	<script type='text/javascript' src='{{ asset('bundles/js/bootstrap.min.js') }}'></script>
+	<script type='text/javascript' src='{{ asset('bundles/site/js/bootstrap.min.js') }}'></script>
     <script type='text/javascript'>
     /* <![CDATA[ */
     var screenReaderText = {"expand":"<span class=\"screen-reader-text\">expand child menu<\/span>","collapse":"<span class=\"screen-reader-text\">collapse child menu<\/span>"};
     /* ]]> */
     </script>
 
-    <script type='text/javascript' src='{{ asset('bundles/js/custom.all.js') }}'></script>
-    <script type='text/javascript' src='{{ asset('bundles/js/custom.home.js') }}?ver=1.0.0'></script>
-    <script type='text/javascript' src='{{ asset('bundles/js/skip-link-focus-fix.js') }}'></script>
-    <script type='text/javascript' src='{{ asset('bundles/js/custom.js') }}'></script>
-    <script type='text/javascript' src='{{ asset('bundles/js/vamos-de-go.js') }}'></script>
+    <script type='text/javascript' src='{{ asset('bundles/site/js/custom.all.js') }}'></script>
+    <script type='text/javascript' src='{{ asset('bundles/site/js/custom.home.js') }}?ver=1.0.0'></script>
+    <script type='text/javascript' src='{{ asset('bundles/site/js/skip-link-focus-fix.js') }}'></script>
+    <script type='text/javascript' src='{{ asset('bundles/site/js/custom.js') }}'></script>
+    <script type='text/javascript' src='{{ asset('bundles/site/js/vamos-de-go.js') }}'></script>
     <script type='text/javascript'>
     /* <![CDATA[ */
     var fcaPcEvents = [{"triggerType":"post","trigger":["14"],"parameters":{"content_name":"{post_title}","content_type":"product","content_ids":"{post_id}"},"event":"ViewContent","delay":"0","scroll":"0","apiAction":"track","ID":"5d4a31b9-e357-44e2-81ef-210e1fdb04b8"}];
@@ -280,6 +332,6 @@
     var fcaPcPost = {"title":"Vamos de Go","type":"page","id":"14","categories":[],"utm_support":"","user_parameters":"","edd_delay":"0","woo_delay":"0"};
     /* ]]> */
     </script>
-    <script type='text/javascript' src='{{ asset('bundles/js/pixel-cat.min.js') }}'></script>
+    <script type='text/javascript' src='{{ asset('bundles/site/js/pixel-cat.min.js') }}'></script>
 </body>
 </html>
