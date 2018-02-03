@@ -1,3 +1,45 @@
-{{ form_start(form) }}
-{{ form_widget(form) }}
-{{ form_end(form) }}
+{% extends '@SiteBundle/Resources/views/base.html.twig' %}
+{% block content %}
+
+</br>
+</br>
+<div class="container">
+    <header class="entry-header">
+        <h1 class="entry-title single-title">Cadastro de endereço de {{typetext}}</h1>
+        <div class="colored-line-left"></div>
+        <div class="clearfix"></div>
+    </header>
+
+	<div class="entry-content content-page llorix_one_lite_contact_form">
+        <div class="col-md-6">
+
+            {% if typetext == 'origin' %}
+                <p>
+                    Para prosseguir com seu cadastro é necessáro informar seu endereço de {{typetext}}, com essa informação será possível analisar qual as melhores rotas para você, por isso preencha de forma adequada esses dados.
+                </p>
+                <p>
+                    Para maiores informações você sempre poderá entrar em contato com nossa equipe de suporte pelo seguinte <a href="#">link</a>. E lembre-se seus dados estão seguros.
+                </p>
+            {% else %}
+                <p>
+                    Pronto! agora que já sabemos seu endereço de origem, precisamos saber qual o destino.
+                </p>
+                <p>
+                    Para maiores informações você sempre poderá entrar em contato com nossa equipe de suporte pelo seguinte <a href="#">link</a>. E lembre-se seus dados estão seguros.
+                </p>
+            {% endif %}
+		</div>
+		<div class="col-md-6">
+        <div class="pirate_forms_wrap">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    {{ form_end(form) }}
+            <div class="pirate_forms_clearfix">
+            </div>
+        </div>
+    </div>
+	<footer class="entry-footer">
+	</footer>
+    </div>
+</div>
+{% endblock %} 

@@ -67,12 +67,12 @@ class UserController extends Controller
 
 
                 $this->addFlash('success', 'Cliente criado com sucesso!');
-                return $this->redirectToRoute('home', ['status' => 1]);
+                return $this->redirectToRoute('sucess-form');
 
             } catch (\Exception $e) {
                 $this->addFlash('danger', 'Algo de errado aconteceu! Por favor, tente novamente.');
                 var_dump($e->getMessage());die;
-                return $this->redirectToRoute('home', ['status' => 2]);
+                return $this->redirectToRoute('sucess-form');
             }
         }
 
@@ -87,6 +87,11 @@ class UserController extends Controller
     public function addAdressAction(Request $request, User $user, $token, $type)
     {   
 
+        $typeText = 'destino';
+        if ($type == 'origin') {
+            $typeText = 'origem';
+        }
+
         $address = new Address();
 
         $form = $this->createForm(AddressType::class, $address);
@@ -100,10 +105,12 @@ class UserController extends Controller
 
                 if ($type == 'origin') {
                     $user->setAddress($address);
+                    $typeText = 'origem';
                 } 
 
                 if ($type == 'destiny') {
                     $user->setDestinyAddress($address);
+                    $typeText = 'destino';
                 }
 
                 $userService = $this->get('user_service');
@@ -114,7 +121,8 @@ class UserController extends Controller
                     return $this->redirectToRoute('add-address', [
                         'user' => $user->getId(),
                         'token' => $token,
-                        'type' => 'destiny'
+                        'type' => 'destiny',
+                        'typetext' => $typeText
                     ]);
                 }
 
@@ -132,7 +140,18 @@ class UserController extends Controller
         }
 
         return $this->render('SiteBundle:User:add-address.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'typetext' => $typeText,
+            'type' => 'origin' 
         ]);
+    }
+
+     /**
+     * @Route("/sucesso", name="sucess-form")
+     */
+    public function sucessFormAction()
+    {
+
+        return $this->render('SiteBundle:User:sucess.html.twig');
     }
 }

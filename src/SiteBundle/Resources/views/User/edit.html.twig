@@ -1,3 +1,30 @@
-{{ form_start(form) }}
-{{ form_widget(form) }}
-{{ form_end(form) }}
+{% extends '@SiteBundle/Resources/views/base.html.twig' %}
+{% block content %}
+
+</br>
+</br>
+<div class="container">
+    <header class="entry-header">
+        <h1 class="entry-title single-title">Suas informações de cadastro</h1>
+        <div class="colored-line-left"></div>
+        <div class="clearfix"></div>
+    </header>
+
+	<div class="entry-content content-page llorix_one_lite_contact_form">
+        <div class="col-md-6">
+            <img src="https://previews.123rf.com/images/rido/rido1509/rido150900026/45333904-closeup-shot-of-happy-young-friends-using-digitaltablet-during-breakfast-smiling-men-and-woman-doing-Stock-Photo.jpg" />
+		</div>
+		<div class="col-md-6">
+        <div class="pirate_forms_wrap">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    {{ form_end(form) }}
+            <div class="pirate_forms_clearfix">
+            </div>
+        </div>
+    </div>
+	<footer class="entry-footer">
+	</footer>
+    </div>
+</div>
+{% endblock %} 
