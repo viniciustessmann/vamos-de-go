@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AdminBundle\Services\UserService;
 use AdminBundle\Form\AddressType;
+use AdminBundle\Form\UserType;
 use AdminBundle\Entity\User;
 use AdminBundle\Entity\Address;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +39,45 @@ class UserController extends Controller
 
         return $this->redirectToRoute('add-address', [
             'user' => $user->getId(), 
-            'token' => $token
+            'token' => $token,
+            'type' => 'origin'
+        ]);
+    }
+
+    /**
+     * @Route("/editar-usuario/{user}/{token}", name="edit-user")
+     */
+    public function editUserAction(Request $request, User $user, $token)
+    {   
+
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) { 
+            try {
+        
+                $userManager = $this->get('fos_user.user_manager');
+                $userManager->createUser($user);
+
+                $user->setPlainPassword($request->request->get('user')['password']);
+                $user->setEnabled(true);
+
+                $userService = $this->get('user_service');
+                $userService->save($user);
+
+
+                $this->addFlash('success', 'Cliente criado com sucesso!');
+                return $this->redirectToRoute('home', ['status' => 1]);
+
+            } catch (\Exception $e) {
+                $this->addFlash('danger', 'Algo de errado aconteceu! Por favor, tente novamente.');
+                var_dump($e->getMessage());die;
+                return $this->redirectToRoute('home', ['status' => 2]);
+            }
+        }
+
+        return $this->render('SiteBundle:User:edit.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 
@@ -80,7 +119,10 @@ class UserController extends Controller
                 }
 
                 $this->addFlash('success', 'Cliente criado com sucesso!');
-                return $this->redirectToRoute('home', ['status' => 1]);
+                return $this->redirectToRoute('edit-user', [
+                    'user' => $user->getId(),
+                    'token' => $user->getToken()
+                ]);
 
             } catch (\Exception $e) {
                 $this->addFlash('danger', 'Algo de errado aconteceu! Por favor, tente novamente.');

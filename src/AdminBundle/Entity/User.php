@@ -120,7 +120,7 @@ class User extends BaseUser
     }
 
     public function getToken(){
-        return $this->toeken;
+        return $this->token;
     }
 
     public function setToken($token)
