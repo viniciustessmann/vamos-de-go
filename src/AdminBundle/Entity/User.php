@@ -28,7 +28,7 @@ class User extends BaseUser
     protected $id;
 
 
-      /**
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string")
@@ -57,11 +57,24 @@ class User extends BaseUser
      */
     private $cpf;
 
-     /**
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="token", type="string")
+     */
+    private $token;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Address", inversedBy="user")
      * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
      */
     private $address;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Address", inversedBy="user")
+     * @ORM\JoinColumn(name="destiny_address_id", referencedColumnName="id")
+     */
+    private $destiny_address;
 
 
     public function __construct()
@@ -81,7 +94,7 @@ class User extends BaseUser
 
     public function setUsername($name) 
     {
-        return $this->username = $name;
+        $this->username = $name;
     }
 
     public function getName(){
@@ -104,6 +117,15 @@ class User extends BaseUser
     public function setCpf($cpf)
     {   
         $this->cpf = $cpf;
+    }
+
+    public function getToken(){
+        return $this->toeken;
+    }
+
+    public function setToken($token)
+    {   
+        $this->token = $token;
     }
     
     /**
@@ -129,6 +151,16 @@ class User extends BaseUser
     public function setAddress($address)
     {
         $this->address = $address;
+    }
+
+    public function getDestinyAddress()
+    {
+        return $this->destiny_address;
+    }
+
+    public function setDestinyAddress($destiny_address)
+    {
+        $this->destiny_address = $destiny_address;
     }
 
     

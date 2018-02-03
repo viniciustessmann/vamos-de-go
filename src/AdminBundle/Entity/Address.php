@@ -25,6 +25,13 @@ class Address
     /**
      * @var string
      *
+     * @ORM\Column(name="name", type="string")
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="address", type="string")
      */
     private $address;
@@ -79,9 +86,24 @@ class Address
         return $this->address;
     }
 
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
     public function setCep($cep)
     {
         $this->cep = $cep;
+    }
+
+    public function getCep()
+    {
+        return $this->cep;
     }
 
     public function setNumber($number)

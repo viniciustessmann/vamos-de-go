@@ -249,24 +249,24 @@
                     <div class="col-md-6" style="width:45%;">
                         <p>Por estarmos buscando atender você e também por acreditar que você mereça um transporte de qualidade, a partir de 2018 estaremos liberando a pré-venda para outras cidades, como o Rio Grande e Cassino.</p>
                         <div class="pirate_forms_wrap">
-                            <form method="post" enctype="application/x-www-form-urlencoded" class="pirate_forms  form_honeypot-on pirate_forms_from_widget-on wordpress-nonce-on pirate-forms-contact-name-on pirate-forms-contact-email-on pirate-forms-contact-subject-on pirate-forms-contact-message-on pirate-forms-contact-submit-on pirate-forms-contact-referrer-on">
+                            <form method="post" action="{{ path('add-user') }}" enctype="application/x-www-form-urlencoded" class="pirate_forms  form_honeypot-on pirate_forms_from_widget-on wordpress-nonce-on pirate-forms-contact-name-on pirate-forms-contact-email-on pirate-forms-contact-subject-on pirate-forms-contact-message-on pirate-forms-contact-submit-on pirate-forms-contact-referrer-on">
                                 <div class="pirate-forms-fields-container">
                                     <div class="pirate_forms_three_inputs_wrap">
                                         <div class="col-xs-12 col-sm-6 contact_name_wrap pirate_forms_three_inputs form_field_wrap">
-                                            <input type="text" id="pirate-forms-contact-name" name="pirate-forms-contact-name" class="form-control" placeholder="Seu nome"  value="">
+                                            <input type="text" id="pirate-forms-contact-name" name="name" class="form-control" placeholder="Seu nome" required  value="">
                                         </div>
                                         <div class="col-xs-12 col-sm-6 contact_email_wrap pirate_forms_three_inputs form_field_wrap">
-                                            <input type="text" id="pirate-forms-contact-email" name="pirate-forms-contact-email" class="form-control" placeholder="Seu telefone"  value="">
+                                            <input type="text" id="pirate-forms-contact-email" name="phone" class="form-control" placeholder="Seu telefone" required value="">
                                         </div>
                                         </br></br>
                                         <div class="col-xs-12 contact_subject_wrap pirate_forms_three_inputs form_field_wrap">
-                                            <input type="email" id="pirate-forms-contact-subject" name="pirate-forms-contact-subject" class="form-control" placeholder="Seu e-mail"  value="">
+                                            <input type="email" id="pirate-forms-contact-subject" name="email" class="form-control" placeholder="Seu e-mail" required  value="">
                                         </div>
                                         </br></br>
                                     </div>
                                    
                                 </div>
-                            </form>	
+                           
                             <div class="pirate_forms_clearfix">
                             </div>
                     </div>
@@ -275,9 +275,10 @@
                 </footer><!-- .fentry-footer -->
             </div><!-- .entry-content -->
         </div>
-        <div class="modal-footer" style="border-top: 1px solid #FFF;">
-            <button type="button" class="btn btn-primary">Salvar Cadastro</button>
+            <div class="modal-footer" style="border-top: 1px solid #FFF;">
+                <input type="submit" class="btn btn-primary" value="Salvar" style="float:left; margin-left:5px;">
             </div>
+             </form>	
         </div>
     </div>
 </div>
