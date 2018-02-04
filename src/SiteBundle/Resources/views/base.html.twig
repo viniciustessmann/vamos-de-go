@@ -256,11 +256,11 @@
                                             <input type="text" id="pirate-forms-contact-name" name="name" class="form-control" placeholder="Seu nome" required  value="">
                                         </div>
                                         <div class="col-xs-12 col-sm-6 contact_email_wrap pirate_forms_three_inputs form_field_wrap">
-                                            <input type="text" id="pirate-forms-contact-email" name="phone" class="form-control" placeholder="Seu telefone" required value="">
+                                            <input type="text" id="pirate-forms-contact-email" name="phone" class="form-control phone" placeholder="Seu telefone" required value="">
                                         </div>
                                         </br></br>
                                         <div class="col-xs-12 contact_subject_wrap pirate_forms_three_inputs form_field_wrap">
-                                            <input type="email" id="pirate-forms-contact-subject" name="email" class="form-control" placeholder="Seu e-mail" required  value="">
+                                            <input type="email" id="pirate-forms-contact-subject" name="email" class="form-control email-add-user" placeholder="Seu e-mail" required  value="">
                                         </div>
                                         </br></br>
                                     </div>
@@ -334,5 +334,50 @@
     /* ]]> */
     </script>
     <script type='text/javascript' src='{{ asset('bundles/site/js/pixel-cat.min.js') }}'></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+	<script>
+		jQuery(document).ready(function(){
+
+			jQuery(".phone")
+			.mask("(99) 9999-9999?9")
+			.focusout(function (event) {  
+				var target, phone, element;  
+				target = (event.currentTarget) ? event.currentTarget : event.srcElement;  
+				phone = target.value.replace(/\D/g, '');
+				element = $(target);  
+				element.unmask();  
+				if(phone.length > 10) {  
+					element.mask("(99) 99999-999?9");  
+				} else {  
+					element.mask("(99) 9999-9999?9");  
+				}  
+			});
+            
+            jQuery(".cep").mask("99999-999");
+            jQuery(".cpf").mask("999.999.999-99");
+
+			jQuery('.btn-save-newsletter').click(function(){
+				var email = jQuery('.email-newsletter').val();
+
+				if (email != "") {
+					var url = window.location.href + 'adicionar-newsletter/' + email;
+					jQuery.post(url, function(data){
+						if (data == 1) {
+							jQuery('.notice-newsletter-success').show();
+							jQuery('.email-newsletter').val("");
+						}
+						if (data == 2) {
+							jQuery('.notice-newsletter-duplicated').show();
+						}
+
+						setTimeout(function(){ jQuery('.notice-newsletter').hide(); }, 3000);
+					});
+				}
+				
+			});
+		});
+	</script>
+
 </body>
 </html>

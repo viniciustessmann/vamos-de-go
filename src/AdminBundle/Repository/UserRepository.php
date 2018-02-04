@@ -15,4 +15,20 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder('fos_user')
             ->orderBy('fos_user.name', 'ASC');
     }
+
+    public function findOneByEmail($email)
+    {
+
+        var_dump($email);die;
+
+        $qb = $this->createQueryBuilder('n')
+        ->where('n.email = :email')
+        ->setParameter('email', $email);
+
+        $query = $qb->getQuery();
+        $totalrows = $query->getResult();
+
+        return count($totalrows);
+        
+    }
 }

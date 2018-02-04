@@ -35,7 +35,7 @@ class AddressType extends AbstractType
             ])
             ->add('cep', TextType::class, [
                 'label' => 'CEP',
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control cep']
             ])
             ->add('neighborhood', EntityType::class, [
                 'class' => Neighborhood::class,

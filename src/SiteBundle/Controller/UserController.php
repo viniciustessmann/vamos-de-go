@@ -21,6 +21,15 @@ class UserController extends Controller
     public function addUserAction(Request $request)
     {   
         $data = $request->request->all();
+
+        $emailExist = $this->checkEmailAction($data['email']);
+
+        if($emailExist) {
+            return $this->redirectToRoute('email-duplicated',[
+                'email' => $data['email']
+            ]);
+        }  
+
         $user = new User();
 
         $userManager = $this->get('fos_user.user_manager');
@@ -88,7 +97,6 @@ class UserController extends Controller
      */
     public function addAdressAction(Request $request, User $user, $token, $type)
     {   
-
         $typeText = 'destino';
         if ($type == 'origin') {
             $typeText = 'origem';
@@ -148,15 +156,23 @@ class UserController extends Controller
         ]);
     }
 
-     /**
+    /**
      * @Route("/sucesso", name="sucess-form")
      */
     public function sucessFormAction()
     {
-
         return $this->render('SiteBundle:User:sucess.html.twig');
     }
 
+    /**
+     * @Route("/email-duplicado/{email}", name="email-duplicated")
+     */
+    public function emailduplicatedAction($email)
+    {
+        return $this->render('SiteBundle:User:email-duplicated.html.twig',[
+            'email' => $email
+        ]);
+    }
 
     /**
      * @Route("/adicionar-newsletter/{email}", name="add-newsletter")
@@ -177,4 +193,20 @@ class UserController extends Controller
         echo '1';
         die;
     }
+
+    /**
+     * @Route("/verificar-email/{email}", name="check-email")
+     */
+    public function checkEmailAction($email)
+    {   
+        $userService = $this->get('user_service');
+        $result = $userService->findOneByCheckEmail($email);
+
+        if ($result == null) {
+            return false;
+        }
+
+        return true;
+    }
+
 }

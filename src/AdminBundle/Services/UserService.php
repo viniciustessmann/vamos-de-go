@@ -65,7 +65,6 @@ class UserService
      */
     public function findAllByRole($role)
     {
-        // $query = $this->em->createQuery('SELECT u FROM AdminBundle:User u WHERE u.roles LIKE :role')->setParameter('role', ['ROLE_USER']);
         $query = $this->em->createQuery('SELECT u FROM AdminBundle:User u');
         $users = $query->getResult();
        
@@ -74,20 +73,18 @@ class UserService
 
         foreach ($users as $user) {
 
-            // echo '<pre>';
-            // var_dump($user->getRoles());   
-
             if(!in_array($role, $user->getRoles())){
-
-            //    echo '<pre>';
-            //    var_dump($role); 
-            //    var_dump($user->getRoles());
-               continue;
+                continue;
             }
 
             $response[] = $user;
         }
         
         return $response;
+    }
+
+    public function findOneByCheckEmail($email) {
+
+        return $this->em->getRepository(User::class)->findOneByEmail($email);
     }
 }
