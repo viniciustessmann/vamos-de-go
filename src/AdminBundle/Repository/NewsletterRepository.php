@@ -10,4 +10,18 @@ namespace AdminBundle\Repository;
  */
 class NewsletterRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getCount($email)
+    {
+        $qb = $this->createQueryBuilder('n')
+        ->where('n.email = :email')
+        ->setParameter('email', $email);
+
+        $query = $qb->getQuery();
+        $totalrows = $query->getResult();
+
+        return count($totalrows);
+        
+    }
+
 }

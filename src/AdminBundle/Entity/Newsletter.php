@@ -24,21 +24,21 @@ class Newsletter
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string")
+     * @ORM\Column(name="name", type="string", nullable=true)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string")
+     * @ORM\Column(name="email", type="string", nullable=true)
      */
     private $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string")
+     * @ORM\Column(name="phone", type="string", nullable=true)
      */
     private $phone;
 

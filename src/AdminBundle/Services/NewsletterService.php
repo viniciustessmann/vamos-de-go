@@ -55,4 +55,8 @@ class NewsletterService
     {
         return $this->em->getRepository(Newsletter::class)->findAll();
     }
+
+    public function existsEmail($email) {
+        return $this->em->getRepository(Newsletter::class)->getCount($email);
+    }
 }

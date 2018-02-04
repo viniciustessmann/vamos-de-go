@@ -5,11 +5,13 @@ namespace SiteBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AdminBundle\Services\UserService;
+use AdminBundle\Services\NewsletterService;
 use AdminBundle\Form\AddressType;
 use AdminBundle\Form\UserType;
 use AdminBundle\Entity\User;
 use AdminBundle\Entity\Address;
 use Symfony\Component\HttpFoundation\Request;
+use AdminBundle\Entity\Newsletter;
 
 class UserController extends Controller
 {
@@ -153,5 +155,26 @@ class UserController extends Controller
     {
 
         return $this->render('SiteBundle:User:sucess.html.twig');
+    }
+
+
+    /**
+     * @Route("/adicionar-newsletter/{email}", name="add-newsletter")
+     */
+    public function addNewsletterAction($email)
+    {   
+        $newsletterService = $this->get('newsletter_service');
+        $count = $newsletterService->existsEmail($email);
+
+        if ($count > 0) {
+            echo '2';
+            die;
+        }
+
+        $newsletter = new Newsletter();
+        $newsletter->setEmail($email);
+        $newsletterService->save($newsletter);
+        echo '1';
+        die;
     }
 }
