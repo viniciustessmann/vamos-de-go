@@ -175,9 +175,9 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/adicionar-newsletter/{email}", name="add-newsletter")
+     * @Route("/adicionar-newsletter/{email}/{name}/{phone}", name="add-newsletter")
      */
-    public function addNewsletterAction($email)
+    public function addNewsletterAction($email, $name, $phone)
     {   
         $newsletterService = $this->get('newsletter_service');
         $count = $newsletterService->existsEmail($email);
@@ -189,6 +189,8 @@ class UserController extends Controller
 
         $newsletter = new Newsletter();
         $newsletter->setEmail($email);
+        $newsletter->setName($name);
+        $newsletter->setPhone($phone);
         $newsletterService->save($newsletter);
         echo '1';
         die;

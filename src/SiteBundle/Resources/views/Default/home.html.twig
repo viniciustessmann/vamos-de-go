@@ -24,9 +24,7 @@ Nós chegamos para entregar o que você já cansou de pedir para as empresas de 
 			</div>
 		</div>
 	</section>
-
-	<article id="post-77" class="contact-page post-77 page type-page status-publish hentry">
-		
+	
 	<section class="call-to-action ribbon-wrap" id="ribbon" role="region" aria-label="Ribbon">
         <div class="section-overlay-layer">
 			<div class="container">
@@ -42,60 +40,85 @@ Nós chegamos para entregar o que você já cansou de pedir para as empresas de 
                         <img src="/bundles/site/img/teste.png">
                     </div>
 				</div>
-
-				</br>
-				</br>
-				</br>
-				<div class="row">		
-					<div class="col-md-8 col-md-offset-2">
-						<h2 class="white-text strong">Newsletter</h2>
-                        <div class="ribbon-subtitle-wrap">Se inscreve na nossa newsletter para ficar por dentro de cada novidade ;)
-                            <p>A era do aperto vai acabar </p>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="input-group center">
-										<input type="text" class="form-control email-newsletter" placeholder="Seu e-mail...">
-										<span class="input-group-btn">
-											<button class="btn btn-default btn-save-newsletter" type="button">Go!</button>
-										</span>
-									</div>
-
-									<p class="notice-newsletter notice-newsletter-success" style="color:green; display:none;">E-mail cadastrado com sucesso!</p>
-									<p class="notice-newsletter notice-newsletter-duplicated" style="color:red; display:none;">E-mail já cadastrado no sistema.</p>
-
-								</div>
-							</div>
-						</div>					
-					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 
+
+	{# Newsletter #}
+	<div class="container">
+		<h2 class="text-left dark-text">Newsletter</h2>
+		<p>Se inscreve em nossa newsletter e fique por dentro das novidades da vamos de GO!</p>
+		{# <form class="form-inline" > #}
+			<div class="form-group">
+				<label class="sr-only" for="email">Nome:</label>
+				<input type="text" class="form-control name-newsletter field-newsletter" placeholder="Seu nome..."  name="name">
+				<span style="color:red; display:none;" class="notice-msg notice-msg-name-newsletter">O nome é obrigatório</span>
+			</div>
+			<div class="form-group">
+				<label class="sr-only" for="email">Email:</label>
+				<input type="email" class="form-control email-newsletter field-newsletter" placeholder="Seu email..."  name="email">
+				<span style="color:red; display:none;" class="notice-msg notice-msg-email-newsletter">O nome é obrigatório</span>
+			</div>
+			<div class="form-group">
+				<label class="sr-only" for="pwd">Telefone:</label>
+				<input type="text" class="form-control phone phone-newsletter field-newsletter" placeholder="Seu telefone..." name="phone">
+				<span style="color:red; display:none;" class="notice-msg notice-msg-phone-newsletter">O nome é obrigatório</span>
+			</div>
+			
+			<button type="submit" class="btn btn-primary standard-button btn-save-newsletter">Salvar</button>
+		
+			<p class="notice-newsletter notice-newsletter-sucess" style="color:green">E-mail cadastrado com sucesso!</p>
+			<p class="notice-newsletter notice-newsletter-error" style="color:red">Erro ao cadastrar o email. Tente novamente</p>
+
+		{# </form> #}
+	</div>
+
 	<script>
 		jQuery(document).ready(function(){
 
 			jQuery('.btn-save-newsletter').click(function(){
+
 				var email = jQuery('.email-newsletter').val();
+				var name  = jQuery('.name-newsletter').val();
+				var phone = jQuery('.phone-newsletter').val();
 
-				if (email != "") {
-					var url = window.location.href + 'adicionar-newsletter/' + email;
-					jQuery.post(url, function(data){
-						if (data == 1) {
-							jQuery('.notice-newsletter-success').show();
-							jQuery('.email-newsletter').val("");
-						}
-						if (data == 2) {
-							jQuery('.notice-newsletter-duplicated').show();
-						}
 
-						setTimeout(function(){ jQuery('.notice-newsletter').hide(); }, 3000);
-					});
+				if (email == "") {
+					jQuery('.notice-msg-email-newsletter').show();
+					return false;
 				}
+
+				if (name == "") {
+					jQuery('.notice-msg-name-newsletter').show();
+					alert('Nome é obrigatorio');
+					return false;
+				}
+
+				if (phone == "") {
+					jQuery('.notice-msg-phone-newsletter').show();
+					return false;
+				}	
+
+				var url = window.location.href + 'adicionar-newsletter/' + email + '/' + name + '/' + phone;
+				jQuery.post(url, function(data){
+					if (data == 1) {
+						jQuery('.notice-newsletter-success').show();
+						jQuery('.email-newsletter').val("");
+					}
+					if (data == 2) {
+						jQuery('.notice-newsletter-duplicated').show();
+					}
+
+					setTimeout(function(){ jQuery('.notice-newsletter').hide(); }, 3000);
+				});
 				
 			});
 
-			
+			jQuery('.field-newsletter').click(function() {
+				jQuery('.notice-msg').hide();
+			});
 
 		});
 	</script>
