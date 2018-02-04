@@ -59,19 +59,21 @@ Nós chegamos para entregar o que você já cansou de pedir para as empresas de 
 			<div class="form-group">
 				<label class="sr-only" for="email">Email:</label>
 				<input type="email" class="form-control email-newsletter field-newsletter" placeholder="Seu email..."  name="email">
-				<span style="color:red; display:none;" class="notice-msg notice-msg-email-newsletter">O nome é obrigatório</span>
+				<span style="color:red; display:none;" class="notice-msg notice-msg-email-newsletter">O e-mail é obrigatório</span>
 			</div>
 			<div class="form-group">
 				<label class="sr-only" for="pwd">Telefone:</label>
 				<input type="text" class="form-control phone phone-newsletter field-newsletter" placeholder="Seu telefone..." name="phone">
-				<span style="color:red; display:none;" class="notice-msg notice-msg-phone-newsletter">O nome é obrigatório</span>
+				<span style="color:red; display:none;" class="notice-msg notice-msg-phone-newsletter">O telefone é obrigatório</span>
 			</div>
 			
-			<button type="submit" class="btn btn-primary standard-button btn-save-newsletter">Salvar</button>
-		
-			<p class="notice-newsletter notice-newsletter-sucess" style="color:green">E-mail cadastrado com sucesso!</p>
-			<p class="notice-newsletter notice-newsletter-error" style="color:red">Erro ao cadastrar o email. Tente novamente</p>
+			<p class="notice-newsletter notice-newsletter-sucess" style="color:green; display:none;">E-mail cadastrado com sucesso!</p>
+			<p class="notice-newsletter notice-newsletter-error" style="color:red; display:none;">Ocorreu um erro ao cadastrar o e-mail</p>
+			<p class="notice-newsletter notice-newsletter-duplicated" style="color:red; display:none;">E-mail já cadastrado no sistema.</p>
 
+
+			<div style="cursor:pointer;" class="btn btn-primary standard-button btn-save-newsletter">Salvar</div>
+					
 		{# </form> #}
 	</div>
 
@@ -84,15 +86,13 @@ Nós chegamos para entregar o que você já cansou de pedir para as empresas de 
 				var name  = jQuery('.name-newsletter').val();
 				var phone = jQuery('.phone-newsletter').val();
 
-
-				if (email == "") {
-					jQuery('.notice-msg-email-newsletter').show();
+				if (name == "") {
+					jQuery('.notice-msg-name-newsletter').show();
 					return false;
 				}
 
-				if (name == "") {
-					jQuery('.notice-msg-name-newsletter').show();
-					alert('Nome é obrigatorio');
+				if (email == "") {
+					jQuery('.notice-msg-email-newsletter').show();
 					return false;
 				}
 
@@ -102,10 +102,13 @@ Nós chegamos para entregar o que você já cansou de pedir para as empresas de 
 				}	
 
 				var url = window.location.href + 'adicionar-newsletter/' + email + '/' + name + '/' + phone;
+
 				jQuery.post(url, function(data){
 					if (data == 1) {
-						jQuery('.notice-newsletter-success').show();
+						jQuery('.notice-newsletter-sucess').show();
 						jQuery('.email-newsletter').val("");
+						jQuery('.name-newsletter').val("");
+						jQuery('.phone-newsletter').val("");
 					}
 					if (data == 2) {
 						jQuery('.notice-newsletter-duplicated').show();
